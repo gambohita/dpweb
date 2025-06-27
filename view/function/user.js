@@ -9,7 +9,7 @@ function validar_form() {
     let cod_postal = document.getElementById("cod_postal").value;
     let direccion = document.getElementById("direccion").value;
     let rol = document.getElementById("rol").value;
-    if (nro_documento == "" 
+    if (nro_documento == ""
         | telefono == "" || correo == "" || departamento == "" || provencia
         == "" || distrito == "" || cod_postal == "" || direccion == "" || rol == "") {
         alert("Completa los campos vacios");
@@ -38,6 +38,14 @@ async function registrarUsuario() {
             cache: 'no-cache',
             body: datos
         });
+        let json = await respuesta.json();
+        //validamos que jnson.status sea = true
+        if (json.status) {
+            alert(json.msg);
+            document.getElementById('frm_user').reset();
+        }else{
+            alert(json.msg);
+        }
     } catch (error) {
         console.log("Error al registrar usuario:" + error);
     }
