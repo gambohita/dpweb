@@ -18,4 +18,4 @@ class viewsControl extends viewModel
         }
         return $response;
     }
-}
+}  

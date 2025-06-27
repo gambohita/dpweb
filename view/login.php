@@ -110,6 +110,7 @@
       ¿No tienes cuenta? <a href="#">Regístrate</a>
     </div>
   </div>
+  <alert></alert>
 
 </body>
 </html>
