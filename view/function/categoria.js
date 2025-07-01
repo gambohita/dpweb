@@ -33,11 +33,11 @@ async function registrarCategoria() {
         //validamos que jnson.status sea = true
         if (json.status) {
             alert(json.msg);
-            document.getElementById('frm_user').reset();
+            document.getElementById('frm_categoria').reset();
         }else{
             alert(json.msg);
         }
     } catch (error) {
-        console.log("Error al registrar usuario:" + error);
+        console.log("Error al registrar categoria:" + error);
     }
 }

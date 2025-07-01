@@ -8,7 +8,7 @@ class CategoriaModel{
        $this->conexion = $this->conexion->connect();
     }
     public function registrar($nombre, $detalle){
-        $consulta = "INSERT INTO categoria (nombre, detalle) VALUES ('$nombre '$detalle')";
+        $consulta = "INSERT INTO categoria (nombre, detalle) VALUES ('$nombre', '$detalle')";
         $sql = $this->conexion->query($consulta);
         if ($sql) {
             $sql = $this->conexion->insert_id;
