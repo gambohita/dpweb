@@ -68,6 +68,13 @@ async function iniciar_sesion() {
             body: datos
 
         })
+        let json = await respuesta.json();
+        //validamos que jnson.status sea = true
+        if (json.status) {
+            location.replace(base_url + ' new-user');
+        } else {
+            alert(json.msg);
+        }
 
     } catch (error) {
         console.log(error);
