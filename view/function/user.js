@@ -32,7 +32,7 @@ async function registrarUsuario() {
         // capturar campos de formulario(HTML)
         const datos = new FormData(frm_user);
         //enviar datos al controlador
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=registrar', {
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=registrar',{
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -43,10 +43,34 @@ async function registrarUsuario() {
         if (json.status) {
             alert(json.msg);
             document.getElementById('frm_user').reset();
-        }else{
+        } else {
             alert(json.msg);
         }
     } catch (error) {
         console.log("Error al registrar usuario:" + error);
+    }
+}
+
+
+async function iniciar_sesion() {
+    let usuario = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    if (usuario == "" || password == "") {
+        alert("Error, campos vacios!");
+        return;
+    }
+    try {
+        const datos = new FormData(frm_login);
+         let respuesta = await fetch(base_url +'control/UsuarioController.php?tipo=iniciar_sesion',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+
+        })
+
+    } catch (error) {
+        console.log(error);
+        
     }
 }

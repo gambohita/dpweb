@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -90,27 +91,31 @@
       text-decoration: underline;
     }
   </style>
+  <script>
+    const base_url = '<?= BASE_URL; ?>';
+  </script>
 </head>
+
 <body>
 
   <div class="login-container">
     <h2>Iniciar Sesión</h2>
-    <form>
+    <form id="frm_login">
       <div class="form-group">
-        <label for="email">Correo electrónico</label>
-        <input type="email" id="email" placeholder="ejemplo@correo.com" required>
+        <label for="tex">Usuario</label>
+        <input type="username" id="username" name="username" required>
       </div>
       <div class="form-group">
         <label for="password">Contraseña</label>
-        <input type="password" id="password" placeholder="********" required>
+        <input type="password" id="password" name="password" required>
       </div>
-      <button type="submit" class="login-button">Entrar</button>
+      <button type="button" class="login-button" onclick="iniciar_sesion();">Ingresar</button>
     </form>
     <div class="bottom-text">
       ¿No tienes cuenta? <a href="#">Regístrate</a>
     </div>
   </div>
   <alert></alert>
-
+  <script src="<?= BASE_URL; ?>view/function/user.js"></script>
 </body>
 </html>
