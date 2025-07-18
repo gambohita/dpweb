@@ -32,7 +32,7 @@ async function registrarUsuario() {
         // capturar campos de formulario(HTML)
         const datos = new FormData(frm_user);
         //enviar datos al controlador
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=registrar',{
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=registrar', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -61,7 +61,7 @@ async function iniciar_sesion() {
     }
     try {
         const datos = new FormData(frm_login);
-         let respuesta = await fetch(base_url +'control/UsuarioController.php?tipo=iniciar_sesion',{
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=iniciar_sesion', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
@@ -71,13 +71,29 @@ async function iniciar_sesion() {
         let json = await respuesta.json();
         //validamos que jnson.status sea = true
         if (json.status) {
-            location.replace(base_url + ' new-user');
+            location.replace(base_url + 'new-user');
         } else {
             alert(json.msg);
         }
 
     } catch (error) {
         console.log(error);
+
+    }
+}
+async function view_users() {
+    try {
+        let respuesta = await fetch(base_url +'control/UsuarioController.php?tipo=ver_usuario',{
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache'
+
+        });
+
+    } catch (error) {
         
     }
+}
+if (document.getElementById('content_users')) {
+    view_users();
 }

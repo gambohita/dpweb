@@ -68,3 +68,8 @@ if ($tipo == "iniciar_sesion") {
      }
      echo json_encode($respuesta);
 }
+if ($tipo == "ver_usuario") {
+     echo "recibido en el controlador";
+     $usuario = $objPersona->verUsuario();
+     echo json_encode($usuario);
+}

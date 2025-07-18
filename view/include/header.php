@@ -24,19 +24,19 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     </li>
-                    <a class="nav-link " aria-current="page" href="#">users</a>
+                    <a class="nav-link "  href="<?= BASE_URL ?>users">users</a>
                     </li>
-                    <a class="nav-link " aria-current="page" href="#">products</a>
-                    </li>
-                    </li>
-                    <a class="nav-link " aria-current="page" href="#">categories</a>
+                    <a class="nav-link " href="#">products</a>
                     </li>
                     </li>
-                    <a class="nav-link " aria-current="page" href="#">clients</a>
+                    <a class="nav-link " href="#">categories</a>
                     </li>
-                    <a class="nav-link " aria-current="page" href="#">shops</a>
                     </li>
-                    <a class="nav-link " aria-current="page" href="#">sales</a>
+                    <a class="nav-link " href="#">clients</a>
+                    </li>
+                    <a class="nav-link " href="#">shops</a>
+                    </li>
+                    <a class="nav-link " href="#">sales</a>
                     </li>
 
                     <li class="nav-item">
