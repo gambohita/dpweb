@@ -4,7 +4,7 @@
         <div class="card">
             <h5 class="card-header">Registro de Usuario</h5>
             <form id="frm_user" action="" method="">
-                <div class="card-body">
+                <div class="card-body ">
                     <div class="mb-3 row">
                         <label for="nro_identidad" class="col-sm-2 col-form-label">Nro de documento:</label>
                         <div class="col-sm-4">

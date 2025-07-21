@@ -1,15 +1,16 @@
 <div class="container">
     <h4 class="mt-3 mb-3 "> Lista de Usuarios</h4>
 
-    <table class="table table-bordered border-primary">
+ <table class="table table-success table-striped-columns">
+        <div class="container text-center">
         <thead>
             <tr>
-                <th>Nro</th>
-                <th>DNI</th>
-                <th>Nombres y Apellidos</th>
-                <th> Correo</th>
-                <th>Rol</th>
-                <th>Estado</th>
+                <th>nro</th>
+                <th>nro_identidad</th>
+                <th>razon_social</th>
+                <th>correo</th>
+                <th>rol</th>
+                <th>estado</th>
             </tr>
         </thead>
         <tbody id="content_users">

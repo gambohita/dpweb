@@ -34,9 +34,9 @@ class UsuarioModel{
         $consulta = "SELECT * FROM persona";
          $sql = $this->conexion->query($consulta);
          while($objeto = $sql->fetch_object()){
-            array_push($arr_usuario, $objeto);
+            array_push($arr_usuarios, $objeto);
          }
-        return $arr_usuario;
+        return $arr_usuarios;
 
 
     }

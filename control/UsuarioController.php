@@ -11,7 +11,7 @@ if ($tipo == "registrar") {
      $telefono = $_POST['telefono'];
      $correo = $_POST['correo'];
      $departamento = $_POST['departamento'];
-     $provincia = $_POST['provencia'];
+     $provincia = $_POST['provincia'];
      $distrito = $_POST['distrito'];
      $cod_postal = $_POST['cod_postal'];
      $direccion = $_POST['direccion'];
@@ -69,7 +69,7 @@ if ($tipo == "iniciar_sesion") {
      echo json_encode($respuesta);
 }
 if ($tipo == "ver_usuario") {
-     echo "recibido en el controlador";
      $usuario = $objPersona->verUsuario();
+     header('Content-Type: application/json');
      echo json_encode($usuario);
 }
