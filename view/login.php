@@ -25,7 +25,7 @@
       background: white;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 24px rgba(143, 111, 111, 0.2);
       width: 100%;
       max-width: 400px;
     }
