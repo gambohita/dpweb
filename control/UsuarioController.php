@@ -73,3 +73,19 @@ if ($tipo == "ver_usuario") {
      header('Content-Type: application/json');
      echo json_encode($usuario);
 }
+if ($tipo == "ver"){
+     //print_r($_POST);
+     $respuesta = array('status'=>false, 'msg'=>'error');
+     $id_persona = $_POST['id_persona']; 
+     $usuario =$objPersona->ver($id_persona);
+     if ($usuario) {
+          $respuesta['status'] = true;
+          $respuesta['data'] = $usuario;
+     }else{
+          $respuesta['msg'] = ' Error, usuario no existe';
+     }
+     echo json_encode($respuesta);
+}
+   
+
+

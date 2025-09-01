@@ -23,4 +23,5 @@ class CategoriaModel{
         return $sql->num_rows;
 
     }
+    
 }

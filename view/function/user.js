@@ -101,10 +101,9 @@ async function view_users() {
                     + '<td>' + (user.correo || '') + '</td>'
                     + '<td>' + (user.rol || '') + '</td>'
                     + '<td>' + (user.estado || '') + '</td>'
-
-
-                '</tr>';
-            });
+                    + '<td><a href="' + base_url + 'edit-user/' + user.id + '">Editar</a></td>'
+                    + '</tr>';
+         });
             document.getElementById('content_users').innerHTML = html;
         } else {
             document.getElementById('content_users').innerHTML = '<tr><td colspan="6">No hay usuarios disponibles</td></tr>';
@@ -116,4 +115,39 @@ async function view_users() {
 }
 if (document.getElementById('conten_users')) {
     view_users;
+}
+async function edit_user() {
+    try {
+        let id_persona = document.getElementById('id_persona').value;
+        const datos = new FormData();
+        datos.append('id_persona', id_persona);
+
+           let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+
+        });
+        json = await respuesta.json();
+        if (!json.status) {
+            alert(json.msg);
+            return
+        }
+        document.getElementById('nro_identidad').value= json.dat.nro_identidad
+        document.getElementById('razon_social').value= json.dat.razon_social
+        document.getElementById('telefono').value= json.dat.telefono
+        document.getElementById('correo').value= json.dat.correo
+        document.getElementById('departamento').value= json.dat.departamento
+        document.getElementById('provincia').value= json.dat.provincia
+        document.getElementById('distrito').value= json.dat.distrito
+        document.getElementById('cod_postal').value= json.dat.cod_postal
+        document.getElementById('direccion').value= json.dat.direccion
+        document.getElementById('rol').value= json.dat.rol
+
+    } catch (error) {
+        console.log('oops, ucurriò un error'+ error);
+        
+    }
+    
 }
