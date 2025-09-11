@@ -1,5 +1,5 @@
 <div class="container">
-<h4 class="mt-3 mb-3 text-center text-danger fs-1">Lista de Usuarios</h4>
+    <h4 class="mt-3 mb-3 text-center text-danger fs-1">Lista de Usuarios</h4>
     <table class="table table-success table-striped-columns text-center">
         <thead>
             <tr>
@@ -9,7 +9,8 @@
                 <th>correo</th>
                 <th>rol</th>
                 <th>estado</th>
-                 <th>Acciones</th>
+                <th>Acciones</th>
+               
             </tr>
         </thead>
         <tbody id="content_users">
@@ -19,5 +20,6 @@
 </div>
 
 <script src="<?= BASE_URL ?>view/function/user.js"></script>
-<script>view_users();</script>
-<script> const base_url = "<?= BASE_URL ?>";</script>
+<script>
+    view_users();
+</script>
