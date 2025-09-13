@@ -1,5 +1,5 @@
 <?php
-require_once("../library/conexion.php");
+require_once ("../library/conexion.php");
 class UsuarioModel{
     private $conexion;
     function __construct()
@@ -41,4 +41,5 @@ class UsuarioModel{
 
     }
 }
+
 
