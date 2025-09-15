@@ -5,9 +5,7 @@
       <tr>
         <th>nombre</th>
         <th>detalle</th>
-        <th>precio</th>
-        <th>fecha_vencimiento</th>
-        <th>imagen</th>
+    
       </tr>
     </thead>
     <tbody id="content_products">

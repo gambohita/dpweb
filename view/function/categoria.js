@@ -41,3 +41,37 @@ async function registrarCategoria() {
         console.log("Error al registrar categoria:" + error);
     }
 }
+async function view_users() {
+    try {
+        let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categoria', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache'
+
+        });
+
+        let json = await respuesta.json();
+        if (json && json.length > 0) {
+            let html = '';
+            json.forEach((categorie, index) => {
+                html += '<tr>'
+                    + '<td>' + (index + 1) + '</td>'
+                    + '<td>' + (categorie.nombre || '') + '</td>'
+                    + '<td>' + (categorie.detalle || '') + '</td>'
+                 
+
+
+                '</tr>';
+            });
+            document.getElementById('content_categories').innerHTML = html;
+        } else {
+            document.getElementById('content_categories').innerHTML = '<tr><td colspan="6">No hay usuarios disponibles</td></tr>';
+        }
+    } catch (error) {
+        console.log(error);
+        document.getElementById('content_categories').innerHTML = '<tr><td colspan="6">Error al cargar los usuarios</td></tr>';
+    }
+}
+if (document.getElementById('content_categories')) {
+    view_users;
+}
