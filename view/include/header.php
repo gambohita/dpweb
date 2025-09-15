@@ -26,10 +26,10 @@
                     </li>
                     <a class="nav-link "  href="<?= BASE_URL ?>users">users</a>
                     </li>
-                    <a class="nav-link " href="#">products</a>
+                    <a class="nav-link " href="<?= BASE_URL ?>new-producto">products</a>
                     </li>
                     </li>
-                    <a class="nav-link " href="#">categories</a>
+                      <a class="nav-link" href="<?= BASE_URL ?>new-categoria">Categories</a>
                     </li>
                     </li>
                     <a class="nav-link " href="#">clients</a>

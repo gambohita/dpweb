@@ -1,9 +1,18 @@
 
+
     <!--inicio de acuerdo de pagina-->
     <div class="container-fluid">
         <div class="card">
-            <h5 class="card-header">Registrar productos</h5>
-            <form id="frm_producto" method="POST">
+            <h5 class="card-header">Editar producto
+            <?php
+                if (isset($_GET["views"])) {
+                    $ruta = explode("/", $_GET["views"]);
+                    echo $ruta[1];
+                }
+                ?>
+            </h5>
+            <form id="frm_edit_producto" method="POST">
+            <input type="hidden" name="id_producto" id="id_producto" value="<?= $ruta[1]; ?>">
                 <div class="card-body">
 
                     <div class="mb-3 row">
@@ -53,12 +62,9 @@
                         </div>
                     </div>
 
-                
                     <div class="mt-3">
-                        <button type="submit" class="btn btn-success">Registrar</button>
-                        <button type="reset" class="btn btn-info">Limpiar</button>
-                        <a href="index.php?page=products" class="btn btn-danger">Cancelar</a>
-                        <a href="<?php echo BASE_URL; ?>producto-listar">ver</a>
+                        <button type="submit" class="btn btn-success">actualizar</button>
+                          <a href="<?php echo BASE_URL; ?>producto-listar" class="btn btn-secondary">Cancelar</a>
                     </div>
 
                 </div>
@@ -66,5 +72,12 @@
         </div>
     </div>
     <!--fin de acuerdo de pagina-->
-
     <script src="<?php echo BASE_URL; ?>view/function/products.js"></script>
+    <script>
+        edit_producto();
+    </script>
+
+
+
+
+

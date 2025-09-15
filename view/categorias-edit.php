@@ -1,12 +1,10 @@
-
-
-    <!--inicio de acuerdo de pagina-->
+  <!--inicio de acuerdo de pagina-->
     <div class="container" style="margin-top: 100px;">
         <div class="card">
             <div class="card-header" style="text-align:center;">
                 Registrar Categoria
             </div>
-            <form id="frm_categoria" action="" method="">
+            <form id="frm_edit_categorie" action="" method="">
                 <div class="card-body">
 
                     <div class="mb-3 row">
@@ -23,15 +21,15 @@
                     </div>
 
                     <div style="display: flex; justify-content:center; gap:20px">
-                        <button type="submit" class="btn btn-primary">Registrar</button>
-                        <button type="reset" class="btn btn-info">Limpiar</button>
-                        <button type="button" class="btn btn-danger">Cancelar</button>
-                         <a href="<?php echo BASE_URL; ?>categorias-lista">ver</a>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                       <button a href="<?php echo BASE_URL; ?>categorias-lista" class="btn btn-secondary">Cancelar</a></button>
+                        
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <!--fin de acuerdo de pagina-->
-
-    <script src="<?php echo BASE_URL; ?>view/function/categories.js"></script>
+    <script src="<?php echo BASE_URL; ?>view/function/categoria.js"></script>
+    <script>
+    edit_categoria();
+</script>

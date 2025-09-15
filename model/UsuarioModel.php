@@ -1,12 +1,7 @@
 <?php
-<<<<<<< HEAD
-require_once ("../library/conexion.php");
-class UsuarioModel{
-=======
 require_once("../library/conexion.php");
 class UsuarioModel
 {
->>>>>>> fd79455d13dc1780d4ed38ac3ea7d5f34329f95a
     private $conexion;
     function __construct()
     {
@@ -66,5 +61,4 @@ class UsuarioModel
         return $sql;
     }
 }
-
 

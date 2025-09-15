@@ -1,0 +1,108 @@
+<?php
+require_once("../model/ProductoModel.php");
+$objProducto = new ProductoModel();
+
+$tipo = $_GET['tipo'];
+
+if ($tipo == "registrar") {
+    // Capturamos los datos enviados por el formulario
+    $codigo  = $_POST['codigo'];
+    $nombre  = $_POST['nombre'] ;
+    $detalle = $_POST['detalle'] ;
+    $precio  = $_POST['precio'] ;
+    $stock   = $_POST['stock'];
+    $id_categoria = $_POST['id_categoria'];
+    $fecha_vencimiento = $_POST['fecha_vencimiento'];
+
+
+    // Validación de campos vacíos
+    if (  $codigo == "" || $nombre == "" || $detalle == "" || 
+        $precio == "" || $stock =="" || $id_categoria== "" || $fecha_vencimiento == "") {
+        $arrResponse = array('status' => false, 'msg' => '⚠ Error, campos vacíos');
+    }else{
+        // Validar que el código no se repita
+        $existeProducto = $objProducto->existeProducto($codigo);
+        if ($existeProducto > 0) {
+            $arrResponse = array('status' => false, 'msg' => '⚠ Error, ya existe un producto con este código');
+        } else {
+            // Intentamos registrar
+            $respuesta = $objProducto->registrar(
+             $codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento);
+            
+            if ($respuesta) {
+                $arrResponse = array('status' => true, 'msg' => ' Producto registrado correctamente');
+            } else {
+                $arrResponse = array('status' => false, 'msg' => ' Error, fallo al registrar producto');
+            }
+        }
+    }
+    echo json_encode($arrResponse);
+}
+
+if ($tipo == "mostrar_productos") {
+    $productos = $objProducto->mostrarProductos();
+    header('content-type: application/json');
+    echo json_encode($productos);
+}
+
+if ($tipo == "ver") {
+    $respuesta = array('status' => false, 'msg' => '');
+    $id_producto = $_POST['id_producto'];
+    $producto = $objProducto->ver($id_producto);
+    if($producto){
+        $respuesta ['status'] = true;
+        $respuesta ['data'] = $producto;
+    }else {
+        $respuesta['msg'] = "Error, categoria no existe";
+    }
+    echo json_encode($respuesta);
+}
+
+if ($tipo == "actualizar") {
+    $id_producto = $_POST['id_producto'];
+    $codigo = $_POST['codigo'];
+    $nombre = $_POST['nombre'];
+    $detalle = $_POST['detalle'];
+    $precio = $_POST['precio'];
+    $stock = $_POST['stock'];
+    $id_categoria = $_POST['id_categoria'];
+    $fecha_vencimiento = $_POST['fecha_vencimiento'];
+
+    if ($id_producto == "" || $codigo == "" || $nombre == "" || $detalle == "" || $precio == "" || $stock == "" || $id_categoria == "" || $fecha_vencimiento == "") {
+        $arrResponse = array('status' => false, 'msg' => 'Error, campos vacios');
+    }else {
+        $existeID = $objProducto->ver($id_producto);
+        if(!$existeID){
+            $arrResponse = array('status' =>false, 'msg' => 'Error, categoria no existe');
+            echo json_encode($arrResponse);
+            exit; 
+        }else {
+            $actualizar = $objProducto->actualizar($id_producto, $codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento);
+            if($actualizar){
+                $arrResponse = array('status' => true, 'msg' => 'Actualizado correctamente');
+                
+            }else {
+                $arrResponse = array('status' => false, 'msg' => $actualizar);  
+            }
+            echo json_encode($arrResponse);
+            exit;
+        }
+    }
+}
+
+
+if($tipo == "eliminar"){
+    $id_producto = $_POST['id_producto'];
+    if($id_producto == ""){
+        $arrResponse = array('status' => false, 'msg' => 'Error, id vacio');
+    }else{
+        $eliminar = $objProducto->eliminar($id_producto);
+        if ($eliminar) {
+            $arrResponse = array('status' => true, 'msg' => 'Producto eliminado');
+        }else{
+            $arrResponse = array('status' => false, 'msg' => 'Error al eliminar producto');
+        }
+        echo json_encode($arrResponse);
+        exit;
+    }
+}

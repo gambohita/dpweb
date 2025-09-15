@@ -9,16 +9,17 @@ class ProductoModel {
         $this->conexion = $this->conexion->connect();
     }
 
-    // 👉 Registrar producto
-    public function registrar($codigo, $nombre, $detalle, $precio, $stock, $fecha_vencimiento, $tipo) {
-        $consulta = "INSERT INTO producto (codigo, nombre, detalle, precio, stock, fecha_vencimiento) 
-                     VALUES ('$codigo', '$nombre', '$detalle', '$precio', '$stock', '$fecha_vencimiento', '$tipo')";
+    // 👉 Registrar producto (con columna tipo)
+    public function registrar($codigo, $nombre, $detalle, $precio, $stock,  $id_categoria, $fecha_vencimiento) {
+        $consulta = "INSERT INTO producto (codigo, nombre, detalle, precio, stock, id_categoria, fecha_vencimiento) 
+        VALUES ('$codigo', '$nombre', '$detalle', '$precio', '$stock', '$id_categoria', '$fecha_vencimiento')";
         $sql = $this->conexion->query($consulta);
 
         if ($sql) {
-            $sql = $this->conexion->insert_id; // Devuelve el id insertado
+            return $this->conexion->insert_id; // Devuelve el id insertado
         } else {
-            $sql = 0;
+            //$sql = 0;
+            error_log("Error MySQL: " . $this->conexion->error);
         }
         return $sql;
     }
@@ -30,14 +31,43 @@ class ProductoModel {
         return $sql->num_rows;
     }
 
-    // 👉 Obtener todos los productos
-    public function obtenerProductos() {
-        $consulta = "SELECT * FROM producto ORDER BY id DESC";
+    public function buscarProductoPorCodigo($codigo){
+        $consulta = "SELECT id, codigo FROM producto WHERE codigo='$codigo' LIMIT 1";
         $sql = $this->conexion->query($consulta);
-        $data = [];
-        while ($fila = $sql->fetch_assoc()) {
-            $data[] = $fila;
+        return $sql->fetch_object();
+    }
+
+    public function mostrarProductos() {
+        $arr_productos = array();
+        $consulta = "SELECT * FROM producto";
+        $sql = $this->conexion->query($consulta);
+        if (!$sql) {
+            error_log("Error en query(): " . $this->conexion->error);
+            return $arr_productos;
         }
-        return $data;
+        while ($objeto = $sql->fetch_object()) {
+            array_push($arr_productos, $objeto);
+        }
+        return $arr_productos;
+    }
+    
+
+    public function ver($id){
+        $consulta = "SELECT * FROM producto WHERE id = '$id'";
+        $sql = $this->conexion->query($consulta);
+        return $sql->fetch_object();
+    }
+
+    public function actualizar($id_producto, $codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento){
+        $consulta = "UPDATE producto SET codigo='$codigo', nombre='$nombre', detalle='$detalle', precio='$precio', stock='$stock', id_categoria='$id_categoria', fecha_vencimiento='$fecha_vencimiento' WHERE id='$id_producto'";
+        $sql = $this->conexion->query($consulta);
+        return $sql;
+    }
+
+    public function eliminar($id_producto){
+        $consulta = "DELETE FROM producto WHERE id='$id_producto'";
+        $sql = $this->conexion->query($consulta);
+        return $sql;
     }
 }
+
