@@ -11,7 +11,7 @@ function validar_form() {
 
 if (document.querySelector('#frm_categoria')) {
     // evita que se envie el formulario
-    let frm_categoria = document.querySelector('#frm_categoria');
+    let frm_categoria = document.querySelector('#frm_categorie');
     frm_categoria.onsubmit = function (e) {
         e.preventDefault();
         validar_form();
@@ -20,7 +20,7 @@ if (document.querySelector('#frm_categoria')) {
 
 async function registrarCategoria() {
     try {
-        const frm_categoria = document.querySelector("#frm_categoria");
+        const frm_categoria = document.querySelector("#frm_categorie");
         const datos = new FormData(frm_categoria);
 
         let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=registrar', {
@@ -33,7 +33,7 @@ async function registrarCategoria() {
         //validamos que jnson.status sea = true
         if (json.status) {
             alert(json.msg);
-            document.getElementById('frm_categoria').reset();
+            document.getElementById('frm_categorie').reset();
         } else {
             alert(json.msg);
         }

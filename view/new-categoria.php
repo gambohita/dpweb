@@ -6,7 +6,7 @@
             <div class="card-header" style="text-align:center;">
                 Registrar Categoria
             </div>
-            <form id="frm_categoria" action="" method="">
+            <form id="frm_categorie" action="" method="">
                 <div class="card-body">
 
                     <div class="mb-3 row">
@@ -34,4 +34,4 @@
     </div>
     <!--fin de acuerdo de pagina-->
 
-    <script src="<?php echo BASE_URL; ?>view/function/categories.js"></script>
+    <script src="<?php echo BASE_URL; ?>view/function/categoria.js"></script>
