@@ -12,7 +12,7 @@
     }
 
     body {
-      background: linear-gradient(120deg, #3498db, #8e44ad);
+      background: linear-gradient(120deg, #4facfe, #00f2fe); /* Degradado azul bonito */
       margin: 0;
       padding: 0;
       display: flex;
@@ -23,72 +23,97 @@
 
     .login-container {
       background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(143, 111, 111, 0.2);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       width: 100%;
       max-width: 400px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .login-container img {
+      width: 80px;
+      margin-bottom: 1rem;
     }
 
     .login-container h2 {
-      text-align: center;
       margin-bottom: 1.5rem;
       color: #333;
+      font-weight: bold;
     }
 
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
+      text-align: left;
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       color: #555;
+      font-weight: 600;
     }
 
     .form-group input {
       width: 100%;
       padding: 0.75rem;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      transition: border-color 0.3s;
+      border-radius: 10px;
+      transition: 0.3s;
+      font-size: 14px;
     }
 
     .form-group input:focus {
-      border-color: #3498db;
+      border-color: #4facfe;
+      box-shadow: 0 0 6px rgba(79, 172, 254, 0.5);
       outline: none;
     }
 
     .login-button {
       width: 100%;
-      padding: 0.75rem;
+      padding: 0.8rem;
       border: none;
-      background: #3498db;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
       color: white;
       font-weight: bold;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: transform 0.2s, background 0.3s;
+      font-size: 15px;
     }
 
     .login-button:hover {
-      background: #2980b9;
+      transform: scale(1.03);
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
     }
 
     .bottom-text {
-      text-align: center;
-      margin-top: 1rem;
+      margin-top: 1.2rem;
       color: #666;
       font-size: 0.9rem;
     }
 
     .bottom-text a {
-      color: #3498db;
+      color: #0072ff;
+      font-weight: bold;
       text-decoration: none;
     }
 
     .bottom-text a:hover {
       text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
   <script>
@@ -102,8 +127,8 @@
     <h2>Iniciar Sesión</h2>
     <form id="frm_login">
       <div class="form-group">
-        <label for="tex">Usuario</label>
-        <input type="username" id="username" name="username" required>
+        <label for="username">Usuario</label>
+        <input type="text" id="username" name="username" required>
       </div>
       <div class="form-group">
         <label for="password">Contraseña</label>
@@ -115,7 +140,7 @@
       ¿No tienes cuenta? <a href="#">Regístrate</a>
     </div>
   </div>
-  <alert></alert>
+
   <script src="<?= BASE_URL; ?>view/function/user.js"></script>
 </body>
 </html>
