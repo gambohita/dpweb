@@ -97,21 +97,16 @@ async function registrarProducto() {
     }
 }
 async function cargar_categorias() {
-    let respuesta = await fetch(base_url + 'control/categoriaController.php?tipo=mostrar_categorias', {
+    let respuesta = await fetch(base_url + 'control/CategoriaController.php?tipo=ver_categorias', {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache'
-
     });
     let json = await respuesta.json();
-    let contenido = '';
+    let contenido = '<option>Seleccione</option>';
     json.data.forEach(categoria => {
-        contenido+= '<option value="">'+categoria.nombre+'</option>';
-
-
+        contenido += '<option value="">'+categoria.nombre+'</option>';
     });
     //console.log(contenido);
     document.getElementById("id_categoria").innerHTML = contenido;
-
-
 }

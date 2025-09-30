@@ -1,19 +1,19 @@
+<div class="container">
+    <h4 class="mt-3 mb-3">Lista de Categorias</h4>
+    <a href="<?= BASE_URL ?>new-category" class="btn btn-primary">Nuevo +</a>
+    <br><br>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Nro</th>
+                <th>Nombre</th>
+                <th>Detalle</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="content_categorias">
 
-</table><div class="container">
-  <h4 class="mt-3 mb-3 text-center text-danger fs-1">Lista de categorias</h4>
-  <table class="table table-success table-striped-columns text-center">
-    <thead>
-      <tr>
-        <th>Nro</th>
-        <th>nombre</th>
-        <th>detalle</th>
-        <th>acciones</th>
-      </tr>
-    </thead>
-    <tbody id="content_categories">
-      <!-- Aquí se cargarán los productos -->
-    </tbody>
-  </table>
+        </tbody>
+    </table>
 </div>
-
-<script src="<?php echo BASE_URL; ?>view/function/categoria.js"></script>
+<script src="<?= BASE_URL ?>view/function/categoria.js"></script>
