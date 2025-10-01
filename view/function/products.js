@@ -254,29 +254,21 @@ async function cargar_categorias() {
     let json = await respuesta.json();
     let contenido = '<option>Seleccione</option>';
     json.data.forEach(categoria => {
-        contenido += '<option value="">'+categoria.nombre+'</option>';
+        contenido += '<option value="categoria.id+">'+categoria.nombre+'</option>';
     });
-    //console.log(contenido);
+   
     document.getElementById("id_categoria").innerHTML = contenido;
 }
-
 async function cargar_proveedores() {
     let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=mostrar_proveedores', {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache'
     });
-    json = await respuesta.json();
-    let contenido = '';
-    if (json.status && json.data) {
-        contenido += '<option value="">Seleccione </option>';
-        json.data.forEach(proveedor => {
-            contenido += '<option value="' + proveedor.id + '">' + proveedor.razon_social + '</option>';
-        });
-    } else {
-        contenido = '<option value = ""> No hay proveedores disponibles</option>';
-    }
-    //console.log(contenido);
+    let json = await respuesta.json();
+    let contenido = '<option value="">Seleccione</option>';
+    json.data.forEach(proveedor => {
+        contenido += '<option value="' + proveedor.id + '">' + razon_social + '</option>';
+    });
     document.getElementById("id_proveedor").innerHTML = contenido;
-
 }

@@ -84,7 +84,7 @@
     </div>
 </div>
 
-<script src="<?php echo BASE_URL; ?>view/function/producto.js"></script>
+<script src="<?php echo BASE_URL; ?>view/function/products.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         cargar_categorias();
