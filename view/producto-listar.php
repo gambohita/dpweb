@@ -1,29 +1,23 @@
-<div class="container mt-5">
-   <div class="card shadow-lg border-0">
-      <div class="card-header text-white text-center fs-3 fw-bold"
-         style="background: linear-gradient(135deg, #2563eb, #9333ea); border-radius: 10px 10px 0 0;">
-         🛒 Lista de Productos
-      </div>
-      <a href="<?= BASE_URL ?>new-product" class="btn btn-primary">Nuevo +</a>
-      <div class="card-body bg-light">
-         <div class="table-responsive">
-            <table class="table table-hover table-bordered align-middle text-center">
-               <thead style="background: #1e293b; color: #f8fafc;">
-                  <tr>
+<div class="container">
+    <h5 class="mt-3 text-center" style="background: blue; color: white; padding: 8px;">LISTA DE PRODUCTOS</h5>
+    <table class="table table-striped text-center" style="border: 2px solid blue;">
+        <thead>
+            <tr>
                 <th>Nro</th>
-                <th>Código</th>
+                <th>Codigo</th>
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Stock</th>
                 <th>Categoria</th>
-                <th>F.V.</th>
+                <th>Proveedor</th>
+                <th>Fecha Vencimiento</th>
                 <th>Acciones</th>
             </tr>
-               </thead>
-               <tbody id="content_productos">
-                     <a href="<?php echo BASE_URL; ?>producto-listar" class="btn btn-secondary">Cancelar</a>
+        </thead>
+        <tbody id="content_products">
+            <!-- Aquí se cargan los productos con JavaScript -->
+        </tbody>
+    </table>
+</div>
 
-               </tbody>
-            </table>
-
-            <script src="<?php echo BASE_URL; ?>view/function/products.js"></script>
+<script src="<?php echo BASE_URL; ?>view/function/products.js"></script>
