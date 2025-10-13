@@ -60,5 +60,15 @@ class UsuarioModel
         $sql = $this->conexion->query($consulta);
         return $sql;
     }
+       public function verClientes()
+    {
+        $arr_usuarios = array();
+       $consulta = "SELECT * FROM persona WHERE rol='Cliente'";
+        $sql = $this->conexion->query($consulta);
+        while ($objeto = $sql->fetch_object()) {
+            array_push($arr_usuarios, $objeto);
+        }
+        return $arr_usuarios;
+    }
 }
 

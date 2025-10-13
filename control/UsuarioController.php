@@ -140,3 +140,11 @@ if ($tipo=="eliminar") {
 
 
 }
+if ($tipo == "ver_clients") {
+    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
+    $usuarios = $objPersona->verClientes();
+    if (count($usuarios)) {
+        $respuesta = array('status' => true, 'msg' => '', 'data' => $usuarios);
+    }
+    echo json_encode($respuesta);
+}

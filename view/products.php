@@ -21,4 +21,4 @@
         </tbody>
     </table>
 </div>
-<script src="<?= BASE_URL ?>view/function/product.js"></script>
+<script src="<?= BASE_URL ?>view/function/producto.js"></script>

@@ -4,7 +4,7 @@
          style="background: linear-gradient(135deg, #f0fff4, #e6fffa);">
         <h5 class="card-header text-center text-white fw-bold fs-4 rounded-top-4" 
             style="background: linear-gradient(90deg, #11998e, #38ef7d);">
-            Registro de Cliente / Proveedor
+            Registro Proveedor
         </h5>
         <form id="frm_user" action="" method="">
             <div class="card-body" style="padding: 30px;">
@@ -76,8 +76,6 @@
                     <label for="rol" class="col-sm-3 col-form-label fw-bold">Tipo</label>
                     <div class="col-sm-9">
                         <select class="form-select border-success shadow-sm" name="rol" id="rol" required>
-                            <option value="" disabled selected>Seleccione una opción</option>
-                            <option value="Cliente">Cliente</option>
                             <option value="Proveedor">Proveedor</option>
                         </select>
                     </div>
@@ -90,6 +88,7 @@
                     </button>
                     <button type="reset" class="btn btn-warning px-4 shadow-sm">Limpiar</button>
                     <button type="button" class="btn btn-danger px-4 shadow-sm">Cancelar</button>
+                     <a href="<?php echo BASE_URL; ?>proveedor" class="btn btn-success">ver</a>
                 </div>
 
             </div>
@@ -98,4 +97,4 @@
 </div>
 <!-- fin de cuerpo de pagina -->
 
-<script src="<?php echo BASE_URL; ?>view/function/clients.js"></script>
+<script src="<?php echo BASE_URL; ?>view/function/peoveedor.js"></script>

@@ -29,7 +29,8 @@
                     <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>users">👤 Users</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>new-producto">📦 Products</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>new-categoria">📂 Categories</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">👥 Clients</a></li>
+                      <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>new-client"> clientes</a></li>
+                     <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>new-proveedor">📂 proveedor</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">🏬 Shops</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">💰 Sales</a></li>
                 </ul>
@@ -55,13 +56,13 @@
         </div>
     </nav>
 
-    <!-- Contenido de la página -->
+    <!-- Contenido de la página 
     <div class="container mt-5">
         <div class="card shadow p-4">
             <h3 class="text-center text-success">Bienvenido al Sistema de Ventas</h3>
             <p class="text-center text-muted">Aquí podrás gestionar productos, usuarios, categorías, clientes y más.</p>
         </div>
-    </div>
+    </div>-->
 
     <script src="<?php echo BASE_URL; ?>view/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
