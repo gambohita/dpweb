@@ -148,3 +148,12 @@ if ($tipo == "ver_clients") {
     }
     echo json_encode($respuesta);
 }
+
+if ($tipo == "ver_proveedor") {
+    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
+    $usuarios = $objPersona->verProveedores();
+    if (count($usuarios)) {
+        $respuesta = array('status' => true, 'msg' => '', 'data' => $usuarios);
+    }
+    echo json_encode($respuesta);
+}

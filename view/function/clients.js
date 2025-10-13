@@ -94,8 +94,8 @@ async function view_clients() {
                 contenidot.appendChild(nueva_fila);
             });
         }
-    } catch (error) {
-        console.log('error en mostrar usuario ' + e);
+    } catch (e) {
+        console.log('error en mostrar clientes ' + e);
     }
 }
 if (document.getElementById('content_clients')) {
@@ -108,7 +108,7 @@ async function edit_client() {
         const datos = new FormData();
         datos.append('id_persona', id_persona);
 
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver', {
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver-', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',

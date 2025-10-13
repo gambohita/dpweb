@@ -2,7 +2,7 @@
     <div class="card shadow-lg border-0 w-100" style="max-width: 1100px;">
         <h5 class="card-header text-white text-center" 
             style="background: linear-gradient(135deg, #1d4ed8, #9333ea); border-radius: 10px 10px 0 0;">
-            📋 Lista de Usuarios
+            📋 Lista de proveedores
         </h5>
         <div class="card-body bg-light">
             <div class="table-responsive">
@@ -19,13 +19,11 @@
 
                         </tr>
                     </thead>
-                    <tbody id="content_users">
+                    <tbody id="content_proveedor">
                         <!-- Aquí se cargarán los usuarios -->
                     </tbody>
                 </table>
             </div>
 
-            <script src="<?= BASE_URL ?>view/function/user.js"></script>
-            <script>
-                view_users();
-            </script>
+            <script src="<?= BASE_URL ?>view/function/proveedor.js"></script>
+            

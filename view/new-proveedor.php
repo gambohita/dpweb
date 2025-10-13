@@ -6,7 +6,7 @@
             style="background: linear-gradient(90deg, #11998e, #38ef7d);">
             Registro Proveedor
         </h5>
-        <form id="frm_user" action="" method="">
+        <form id="frm_proveedor" action="" method="">
             <div class="card-body" style="padding: 30px;">
 
                 <div class="mb-3 row">
@@ -76,6 +76,7 @@
                     <label for="rol" class="col-sm-3 col-form-label fw-bold">Tipo</label>
                     <div class="col-sm-9">
                         <select class="form-select border-success shadow-sm" name="rol" id="rol" required>
+                             <option value="" disabled selected>Seleccione</option>
                             <option value="Proveedor">Proveedor</option>
                         </select>
                     </div>
@@ -97,4 +98,4 @@
 </div>
 <!-- fin de cuerpo de pagina -->
 
-<script src="<?php echo BASE_URL; ?>view/function/peoveedor.js"></script>
+<script src="<?php echo BASE_URL; ?>view/function/proveedor.js"></script>
