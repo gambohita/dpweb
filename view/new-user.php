@@ -4,7 +4,7 @@
          style="background: linear-gradient(135deg, #f0fff4, #e6fffa);">
         <h5 class="card-header text-center text-white fw-bold fs-4 rounded-top-4" 
             style="background: linear-gradient(90deg, #11998e, #38ef7d);">
-            Registro de Cliente / Proveedor
+            Registro de usuarios
         </h5>
         <form id="frm_user" action="" method="">
             <div class="card-body" style="padding: 30px;">
@@ -98,4 +98,4 @@
 </div>
 <!-- fin de cuerpo de pagina -->
 
-<script src="<?php echo BASE_URL; ?>view/function/clients.js"></script>
+<script src="<?php echo BASE_URL; ?>view/function/user.js"></script>

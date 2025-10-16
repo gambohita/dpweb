@@ -1,4 +1,3 @@
-
 <div class="container">
     <h4 class="mt-3 mb-3">Lista de Productos</h4>
     <a href="<?= BASE_URL ?>new-product" class="btn btn-primary">Nuevo +</a>
@@ -21,4 +20,4 @@
         </tbody>
     </table>
 </div>
-<script src="<?= BASE_URL ?>view/function/producto.js"></script>
+<script src="<?= BASE_URL ?>view/function/product.js"></script>
