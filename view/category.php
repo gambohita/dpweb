@@ -16,4 +16,4 @@
         </tbody>
     </table>
 </div>
-<script src="<?= BASE_URL ?>view/function/categoria.js"></script>
+<script src="<?= BASE_URL ?>view/function/category.js"></script>
