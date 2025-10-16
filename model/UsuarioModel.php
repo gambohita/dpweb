@@ -59,8 +59,10 @@ class UsuarioModel
         $consulta = "DELETE FROM persona WHERE id = '$id'";
         $sql = $this->conexion->query($consulta);
         return $sql;
+
         //ver clientes
     }
+    
        public function verClientes()
     {
         $arr_usuarios = array();

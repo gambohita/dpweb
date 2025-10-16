@@ -27,7 +27,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link active text-warning" href="#">🏠 Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>users">👤 Users</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>new-producto">📦 Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>new-product">📦 Products</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>new-categoria">📂 Categories</a></li>
                       <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>new-client"> clientes</a></li>
                      <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>new-proveedor">📂 proveedor</a></li>
