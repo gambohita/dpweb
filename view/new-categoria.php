@@ -38,7 +38,7 @@
 </div>
 <!-- FIN DE CUERPO DE PÁGINA -->
 
-<script src="<?php echo BASE_URL; ?>view/function/categories.js"></script>
+<script src="<?php echo BASE_URL; ?>view/function/category.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
 
