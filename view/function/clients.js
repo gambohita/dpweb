@@ -12,10 +12,10 @@ function validar_form(tipo) {
     if (nro_documento == "" || razon_social == "" || telefono == "" || correo == "" || departamento == "" || provincia == "" || distrito == "" || cod_postal == "" || direccion == "" || rol == "") {
         Swal.fire({
             title: "Error campos vacios!",
-            icon: "Error",
+            icon: "error",
             draggable: true
         });
-        return;
+        return false;
     }
     if (tipo == "nuevo") {
         registrarCliente();
@@ -23,35 +23,31 @@ function validar_form(tipo) {
     if (tipo == "actualizar") {
         actualizarCliente();
     }
-
+    return true;
 }
 
 if (document.querySelector('#frm_client')) {
-    // evita que se envie el formulario
     let frm_client = document.querySelector('#frm_client');
     frm_client.onsubmit = function (e) {
         e.preventDefault();
         validar_form("nuevo");
     }
 }
+
 async function registrarCliente() {
     try {
-        //capturar campos de formulario (HTML)
         const datos = new FormData(frm_client);
-        //enviar datos a controlador
         let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=registrar', {
             method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
             body: datos
         });
         let json = await respuesta.json();
-        // validamos que json.status sea = True
-        if (json.status) { //true
-            alert(json.msg);
+        if (json.status) {
+            Swal.fire('Éxito', json.msg, 'success');
             document.getElementById('frm_client').reset();
+            view_clients();
         } else {
-            alert(json.msg);
+            Swal.fire('Error', json.msg, 'error');
         }
     } catch (e) {
         console.log("Error al registrar Cliente:" + e);
@@ -60,83 +56,87 @@ async function registrarCliente() {
 
 async function view_clients() {
     try {
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_clients', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache'
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver_clientes', {
+            method: 'POST'
         });
-        json = await respuesta.json();
-        contenidot = document.getElementById('content_clients');
-        if (json.status) {
-            let cont = 1;
-            json.data.forEach(usuario => {
-                if (usuario.estado == 1) {
-                    estado = "activo";
-                } else {
-                    estado = "inactivo";
-                }
-                let nueva_fila = document.createElement("tr");
-                nueva_fila.id = "fila" + usuario.id;
-                nueva_fila.className = "filas_tabla";
-                nueva_fila.innerHTML = `
-                            <td>${cont}</td>
-                            <td>${usuario.nro_identidad}</td>
-                            <td>${usuario.razon_social}</td>
-                            <td>${usuario.correo}</td>
-                            <td>${usuario.rol}</td>
-                            <td>${estado}</td>
-                            <td>
-                                <a href="`+ base_url + `edit-client/` + usuario.id + `">Editar</a>
-                                <button class="btn btn-danger" onclick="fn_eliminar(` + usuario.id + `);">Eliminar</button>
-                            </td>
+        let json = await respuesta.json();
+        let content_clients = document.getElementById('content_clients');
+        content_clients.innerHTML = '';
+
+        const rolesMap = {
+            'administrador': 'Administrador',
+            'cliente': 'Cliente',
+            'proveedor': 'Proveedor',
+            'vendedor': 'Vendedor'
+        };
+
+        if (json.status && json.data) {
+            json.data.forEach((user, index) => {
+                let fila = document.createElement('tr');
+                fila.classList.add('text-center');
+                fila.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${user.nro_identidad || ''}</td>
+                    <td>${user.razon_social || ''}</td>
+                    <td>${user.correo || ''}</td>
+                    <td>${rolesMap[user.rol] || 'Desconocido'}</td>
+                    <td>${user.estado || 'Activo'}</td>
+                    <td>
+                        <a href="${base_url}edit-client/${user.id}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <button onclick="eliminarClients(${user.id})" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </td>
                 `;
-                cont++;
-                contenidot.appendChild(nueva_fila);
+                content_clients.appendChild(fila);
             });
+        } else {
+            content_clients.innerHTML = `
+                <tr>
+                    <td colspan="7" class="text-center">${json.msg || 'No hay clientes registrados'}</td>
+                </tr>
+            `;
         }
     } catch (e) {
-        console.log('error en mostrar clientes ' + e);
+        console.log("Error al ver Clientes: " + e);
+        document.getElementById('content_clients').innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center">Error al cargar los clientes</td>
+            </tr>
+        `;
     }
 }
-if (document.getElementById('content_clients')) {
-    view_clients();
-}
 
-async function edit_client() {
+async function edit_client(id) {
     try {
-        let id_persona = document.getElementById('id_persona').value;
-        const datos = new FormData();
-        datos.append('id_persona', id_persona);
-
-        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=ver-', {
-            method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            body: datos
-        });
-        json = await respuesta.json();
-        if (!json.status) {
-            alert(json.msg);
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=obtener_usuario&id=' + id);
+        let json = await respuesta.json();
+        if (!json.id) {
+            Swal.fire('Error', json.msg || 'Usuario no encontrado', 'error');
             return;
         }
-        document.getElementById('nro_identidad').value = json.data.nro_identidad;
-        document.getElementById('razon_social').value = json.data.razon_social;
-        document.getElementById('telefono').value = json.data.telefono;
-        document.getElementById('correo').value = json.data.correo;
-        document.getElementById('departamento').value = json.data.departamento;
-        document.getElementById('provincia').value = json.data.provincia;
-        document.getElementById('distrito').value = json.data.distrito;
-        document.getElementById('cod_postal').value = json.data.cod_postal;
-        document.getElementById('direccion').value = json.data.direccion;
-        document.getElementById('rol').value = json.data.rol;
-
+        document.getElementById('id_persona').value = json.id;
+        document.getElementById('nro_identidad').value = json.nro_identidad;
+        document.getElementById('razon_social').value = json.razon_social;
+        document.getElementById('telefono').value = json.telefono;
+        document.getElementById('correo').value = json.correo;
+        document.getElementById('departamento').value = json.departamento;
+        document.getElementById('provincia').value = json.provincia;
+        document.getElementById('distrito').value = json.distrito;
+        document.getElementById('cod_postal').value = json.cod_postal;
+        document.getElementById('direccion').value = json.direccion;
+        document.getElementById('rol').value = json.rol;
+        // No es un modal, así que no se necesita $('#modalEdit').modal('show');
     } catch (error) {
-        console.log('oops, ocurrió un error ' + error);
+        console.log('Error al editar: ' + error);
+        Swal.fire('Error', 'No se pudieron cargar los datos', 'error');
     }
 }
-if (document.querySelector('#frm_edit_user')) {
-    // evita que se envie el formulario
-    let frm_user = document.querySelector('#frm_edit_user');
+
+if (document.querySelector('#frm_edit_cliente')) {
+    let frm_user = document.querySelector('#frm_edit_cliente');
     frm_user.onsubmit = function (e) {
         e.preventDefault();
         validar_form("actualizar");
@@ -144,43 +144,54 @@ if (document.querySelector('#frm_edit_user')) {
 }
 
 async function actualizarCliente() {
-    const datos = new FormData(frm_edit_user);
-    let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=actualizar', {
+    const datos = new FormData(frm_edit_cliente);
+    let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=actualizar_usuario', {
         method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
         body: datos
     });
-    json = await respuesta.json();
-    if (!json.status) {
-        alert("Oooooops, ocurrio un error al actualizar, intentelo nuevamente");
-        console.log(json.msg);
-        return;
-    }else{
-        alert(json.msg);
+    let json = await respuesta.json();
+    if (json.status) {
+        await Swal.fire('Éxito', json.msg, 'success');
+            window.location.href = base_url + 'cliente'; // Redirigir a la lista
+    } else {
+        Swal.fire('Error', json.msg, 'error');
     }
 }
-async function fn_eliminar(id) {
-    if (window.confirm("Confirmar eliminar?")) {
-        eliminar(id);
-    }
-}
-async function eliminar(id) {
-    let datos = new FormData();
-    datos.append('id_persona', id);
-    let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=eliminar', {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        body: datos
+
+async function eliminarClients(id) {
+    Swal.fire({
+        title: "¿Estás seguro?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=eliminar_usuario&id=' + id);
+                let json = await respuesta.json();
+                if (json.status) {
+                    Swal.fire("Eliminado!", json.msg, "success");
+                    view_clients();
+                } else {
+                    Swal.fire("Error!", json.msg, "error");
+                }
+            } catch (e) {
+                console.log("Error al eliminar:", e);
+            }
+        }
     });
-    json = await respuesta.json();
-    if (!json.status) {
-        alert("Oooooops, ocurrio un error al eliminar persona, intentelo mas tarde");
-        console.log(json.msg);
-        return;
-    }else{
-        alert(json.msg);
-        location.replace(base_url + 'users');
-    }
+}
+
+if (document.getElementById('content_clients')) {
+    view_clients();
+}
+
+//
+if (document.getElementById('btn_guardar_cambios')) {
+    document.getElementById('btn_guardar_cambios').addEventListener('click', function () {
+        actualizarUsuario(); // Llama a la función que hará el update
+    });
 }

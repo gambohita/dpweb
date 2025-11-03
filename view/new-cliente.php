@@ -1,11 +1,11 @@
 <!-- INICIO DE CUERPO DE PÁGINA -->
 <div class="container my-4">
   <div class="card shadow-sm border-0">
-    <h5 class="card-header bg-info text-white">
-      <i class="bi bi-truck"></i> Registro de Proveedor
+    <h5 class="card-header bg-primary text-white">
+      <i class="bi bi-person-plus"></i> Registro de Cliente
     </h5>
 
-    <form id="frm_proveedor" class="p-3">
+    <form id="frm_client" class="p-3">
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="nro_identidad" class="form-label">
@@ -75,7 +75,7 @@
             <i class="bi bi-shield-check"></i> Rol:
           </label>
           <select class="form-select" name="rol" id="rol" readonly>
-            <option value="3" selected>Proveedor</option>
+            <option value="2" selected>Cliente</option>
           </select>
         </div>
       </div>
@@ -84,10 +84,10 @@
         <button type="submit" class="btn btn-success">
           <i class="bi bi-check-circle"></i> Registrar
         </button>
-        <button type="reset" class="btn btn-info text-white" id="btn_limpiar_proveedor">
+        <button type="reset" class="btn btn-info text-white" id="btn_limpiar_cliente">
           <i class="bi bi-arrow-clockwise"></i> Limpiar
         </button>
-        <button type="button" class="btn btn-danger" id="btn_cancelar_proveedor">
+        <button type="button" class="btn btn-danger" id="btn_cancelar_cliente">
           <i class="bi bi-x-circle"></i> Cancelar
         </button>
       </div>
@@ -96,5 +96,4 @@
 </div>
 <!-- FIN DE CUERPO DE PÁGINA -->
 
-<script src="<?php echo BASE_URL; ?>view/function/proveedor.js"></script>
-
+<script src="<?php echo BASE_URL; ?>view/function/clients.js"></script>

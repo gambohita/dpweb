@@ -1,101 +1,102 @@
-<!-- inicio de cuerpo de pagina -->
-<div class="container" style="margin-top: 80px; max-width: 900px;">
-    <div class="card shadow-lg border-0 rounded-4" 
-         style="background: linear-gradient(135deg, #f0fff4, #e6fffa);">
-        <h5 class="card-header text-center text-white fw-bold fs-4 rounded-top-4" 
-            style="background: linear-gradient(90deg, #11998e, #38ef7d);">
-            Registro de usuarios
+<!-- INICIO DE CUERPO DE PAGINA -->
+<div class="container-fluid" style="min-height: 100vh; background: linear-gradient(135deg, #d4fc79, #96e6a1); display: flex; justify-content: center; align-items: center; padding: 40px 0; font-family: 'Poppins', sans-serif;">
+    <div class="card shadow" style="width: 90%; max-width: 900px; border: none; border-radius: 20px; background: #ffffffcc; backdrop-filter: blur(8px); box-shadow: 0 8px 25px rgba(0,0,0,0.2);">
+        <h5 class="card-header text-center" style="background: linear-gradient(90deg, #11998e, #38ef7d); color: white; font-weight: 600; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 15px;">
+            <i class="bi bi-person-plus"></i> Registro de Usuario
         </h5>
+
         <form id="frm_user" action="" method="">
             <div class="card-body" style="padding: 30px;">
-
-                <div class="mb-3 row">
-                    <label for="nro_identidad" class="col-sm-3 col-form-label fw-bold">Nro de Documento</label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control border-success shadow-sm" id="nro_identidad" name="nro_identidad" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="nro_identidad" class="form-label" style="color:#0f5132; font-weight:500;"><i class="bi bi-card-text"></i> Nro de Documento:</label>
+                            <input type="number" class="form-control" id="nro_identidad" name="nro_identidad" required style="border-radius:10px; border:1px solid #a5d6a7;">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="razon_social" class="form-label" style="color:#0f5132; font-weight:500;"><i class="bi bi-building"></i> Razón social:</label>
+                            <input type="text" class="form-control" id="razon_social" name="razon_social" required style="border-radius:10px; border:1px solid #a5d6a7;">
+                        </div>
                     </div>
                 </div>
 
-                <div class="mb-3 row">
-                    <label for="razon_social" class="col-sm-3 col-form-label fw-bold">Razón Social</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control border-success shadow-sm" id="razon_social" name="razon_social" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label" style="color:#0f5132; font-weight:500;"><i class="bi bi-telephone"></i> Teléfono:</label>
+                            <input type="number" class="form-control" id="telefono" name="telefono" required style="border-radius:10px; border:1px solid #a5d6a7;">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="correo" class="form-label" style="color:#0f5132; font-weight:500;"><i class="bi bi-envelope"></i> Correo:</label>
+                            <input type="email" class="form-control" id="correo" name="correo" required style="border-radius:10px; border:1px solid #a5d6a7;">
+                        </div>
                     </div>
                 </div>
 
-                <div class="mb-3 row">
-                    <label for="telefono" class="col-sm-3 col-form-label fw-bold">Teléfono</label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control border-success shadow-sm" id="telefono" name="telefono" required>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="departamento" class="form-label" style="color:#0f5132; font-weight:500;"><i class="bi bi-geo-alt"></i> Departamento:</label>
+                            <input type="text" class="form-control" id="departamento" name="departamento" required style="border-radius:10px; border:1px solid #a5d6a7;">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="provincia" class="form-label" style="color:#0f5132; font-weight:500;"><i class="bi bi-geo-alt"></i> Provincia:</label>
+                            <input type="text" class="form-control" id="provincia" name="provincia" required style="border-radius:10px; border:1px solid #a5d6a7;">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="distrito" class="form-label" style="color:#0f5132; font-weight:500;"><i class="bi bi-geo-alt"></i> Distrito:</label>
+                            <input type="text" class="form-control" id="distrito" name="distrito" required style="border-radius:10px; border:1px solid #a5d6a7;">
+                        </div>
                     </div>
                 </div>
 
-                <div class="mb-3 row">
-                    <label for="correo" class="col-sm-3 col-form-label fw-bold">Correo Electrónico</label>
-                    <div class="col-sm-9">
-                        <input type="email" class="form-control border-success shadow-sm" id="correo" name="correo" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="cod_postal" class="form-label" style="color:#0f5132; font-weight:500;"><i class="bi bi-mailbox"></i> Código postal:</label>
+                            <input type="number" class="form-control" id="cod_postal" name="cod_postal" required style="border-radius:10px; border:1px solid #a5d6a7;">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label" style="color:#0f5132; font-weight:500;"><i class="bi bi-house"></i> Dirección:</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" required style="border-radius:10px; border:1px solid #a5d6a7;">
+                        </div>
                     </div>
                 </div>
 
-                <div class="mb-3 row">
-                    <label for="departamento" class="col-sm-3 col-form-label fw-bold">Departamento</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control border-success shadow-sm" id="departamento" name="departamento" required>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="rol" class="form-label" style="color:#0f5132; font-weight:500;"><i class="bi bi-shield-check"></i> Rol:</label>
+                            <select class="form-control" name="rol" id="rol" required style="border-radius:10px; border:1px solid #a5d6a7;">
+                                <option disabled selected>Seleccionar rol</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="cliente">Cliente</option>
+                                <option value="proveedor">Proveedor</option>
+                                <option value="vendedor">Vendedor</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <div class="mb-3 row">
-                    <label for="provincia" class="col-sm-3 col-form-label fw-bold">Provincia</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control border-success shadow-sm" id="provincia" name="provincia" required>
-                    </div>
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <button type="submit" class="btn btn-success btn-sm" style="background: linear-gradient(90deg, #11998e, #38ef7d); border:none; color:white; border-radius:10px;"><i class="bi bi-check-circle"></i> Registrar</button>
+                    <button type="reset" class="btn btn-info btn-sm" id="btn_limpiar" style="background-color:#4dd0e1; border:none; color:white; border-radius:10px;"><i class="bi bi-arrow-clockwise"></i> Limpiar</button>
+                    <button type="button" class="btn btn-danger btn-sm" id="btn_cancelar" style="background-color:#ef5350; border:none; color:white; border-radius:10px;"><i class="bi bi-x-circle"></i> Cancelar</button>
                 </div>
-
-                <div class="mb-3 row">
-                    <label for="distrito" class="col-sm-3 col-form-label fw-bold">Distrito</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control border-success shadow-sm" id="distrito" name="distrito" required>
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
-                    <label for="cod_postal" class="col-sm-3 col-form-label fw-bold">Código Postal</label>
-                    <div class="col-sm-9">
-                        <input type="number" class="form-control border-success shadow-sm" id="cod_postal" name="cod_postal" required>
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
-                    <label for="direccion" class="col-sm-3 col-form-label fw-bold">Dirección</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control border-success shadow-sm" id="direccion" name="direccion" required>
-                    </div>
-                </div>
-
-                <div class="mb-3 row">
-                    <label for="rol" class="col-sm-3 col-form-label fw-bold">Tipo</label>
-                    <div class="col-sm-9">
-                        <select class="form-select border-success shadow-sm" name="rol" id="rol" required>
-                            <option value="" disabled selected>Seleccione una opción</option>
-                            <option value="Cliente">Cliente</option>
-                            <option value="Proveedor">Proveedor</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="text-center mt-4" style="gap:15px; display:flex; flex-wrap: wrap; justify-content:center;">
-                    <button type="submit" class="btn text-white px-4 shadow-sm" 
-                            style="background: linear-gradient(90deg, #11998e, #38ef7d); border:none;">
-                        Registrar
-                    </button>
-                    <button type="reset" class="btn btn-warning px-4 shadow-sm">Limpiar</button>
-                    <button type="button" class="btn btn-danger px-4 shadow-sm">Cancelar</button>
-                </div>
-
             </div>
         </form>
     </div>
 </div>
-<!-- fin de cuerpo de pagina -->
+<!-- FIN DE CUERPO DE PAGINA -->
 
 <script src="<?php echo BASE_URL; ?>view/function/user.js"></script>
