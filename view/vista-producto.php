@@ -14,13 +14,16 @@
     </h4>
     <div class="carousel-inner">
         <div class="carousel-item active" data-bs-interval="10000">
-            <img src=http://localhost/dpweb/ class="d-block w-50" alt="Imagen 1">
+            <img src=http://localhost/dpweb/uploads/productos/prod_690c2ec07e459.jpeg class="d-block w-30" alt="Imagen 1">
         </div>
         <div class="carousel-item" data-bs-interval="2000">
-            <img src="http://localhost/dpweb/view/img/" class="d-block w-100" alt="Imagen 2">
+            <img src=http://localhost/dpweb/uploads/productos/prod_690c2f0cac2e7.jpeg class="d-block w-30" alt="Imagen 2">
         </div>
         <div class="carousel-item">
-            <img src="http://localhost/dpweb/view/img/" class="d-block w-100" alt="Imagen 3">
+            <img src=http://localhost/dpweb/uploads/productos/prod_690c2f46c8eaa.jpeg class="d-block w-30" alt="Imagen 3">
+        </div>
+        <div class="carousel-item">
+            <img src=http://localhost/dpweb/uploads/productos/prod_690c31c394bdb.jpeg class="d-block w-30" alt="Imagen 3">
         </div>
     </div>
 
@@ -42,6 +45,10 @@
       <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Siguiente</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
       </button>
   </div>
 

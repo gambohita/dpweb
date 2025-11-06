@@ -108,13 +108,49 @@ if ($tipo == "actualizar_producto"){
     if ($verificar && $verificar['id'] != $id_actual) {
         echo json_encode(['status' => false, 'msg' => 'Error, producto ya existe.']);
     } else {
-     
-        
+
        require_once("../model/CategoriaModel.php");
         $objCategoria = new CategoriaModel();
         if ($id_categoria && !$objCategoria->obtenerCategoriaPorId($id_categoria)) {
             echo json_encode(['status' => false, 'msg' => 'Error, la categoría no existe']);
         } else {
+            if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
+                //echo "NO SE ENVIO LA IMAGEN";
+                $imagen = $producto->imagen;
+            } else {
+                //echo "SE ENVIO LA IMAGEN";
+                //subir imagen en la carpeta en la carpeta uploat, obtener laruta de ese archivo y esa ruta almacenar en una variable imagen y enviar a la base de datos
+                $file = $_FILES['imagen'];
+                $ext  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                $extPermitidas = ['jpg', 'jpeg', 'png'];
+
+                if (!in_array($ext, $extPermitidas)) {
+                    echo json_encode(['status' => false, 'msg' => 'Formato de imagen no permitido']);
+                    exit;
+                }
+                if ($file['size'] > 5 * 1024 * 1024) { // 5MB
+                    echo json_encode(['status' => false, 'msg' => 'La imagen supera 2MB']);
+                    exit;
+                }
+                $carpetaUploads = "../uploads/productos/";
+                if (!is_dir($carpetaUploads)) {
+                    @mkdir($carpetaUploads, 0775, true);
+                }
+
+                $nombreUnico = uniqid('prod_') . '.' . $ext;
+                $rutaFisica  = $carpetaUploads . $nombreUnico;
+                $imagen = "uploads/productos/" . $nombreUnico;
+
+                if (!move_uploaded_file($file['tmp_name'], $rutaFisica)) {
+                    echo json_encode(['status' => false, 'msg' => 'No se pudo guardar la imagen']);
+                    exit;
+                }
+
+                // Opcional: Eliminar la imagen anterior si existe y no es la misma
+                if (!empty($producto->imagen) && file_exists("../" . $producto->imagen)) {
+                    @unlink("../" . $producto->imagen);
+                }
+            }
            
             if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
                 $target_dir = "../Uploads/productos/";

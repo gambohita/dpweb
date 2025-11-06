@@ -1,0 +1,141 @@
+/* ======================================================
+   ESTILOS GLOBALES
+====================================================== */
+body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    min-height: 100vh;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    transition: background 0.5s ease-in-out;
+  }
+  
+  /* ======================================================
+     NAVBAR
+  ====================================================== */
+  .navbar {
+    background: linear-gradient(90deg, #00b894, #00cec9, #0984e3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 0.8rem 1rem;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .navbar:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+  }
+  
+  .navbar-brand {
+    font-weight: 700;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff !important;
+    letter-spacing: 0.5px;
+  }
+  
+  .navbar-brand i {
+    font-size: 1.8rem;
+    color: #ffffff;
+  }
+  
+  /* ======================================================
+     LINKS DEL MENÚ
+  ====================================================== */
+  .nav-link {
+    color: #f9f9f9 !important;
+    font-weight: 600;
+    margin: 0 8px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .nav-link:hover {
+    color: #ffeb3b !important;
+    transform: translateY(-1px);
+  }
+  
+  .nav-item .active {
+    border-bottom: 2px solid #ffffff;
+  }
+  
+  /* ======================================================
+     DROPDOWN DE USUARIO
+  ====================================================== */
+  .dropdown-menu {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .dropdown-item {
+    font-weight: 500;
+    color: #333;
+    padding: 10px 15px;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #e0f2f1;
+    color: #00796b;
+    transform: translateX(3px);
+  }
+  
+  /* ======================================================
+     EFECTO RESPONSIVO
+  ====================================================== */
+  @media (max-width: 992px) {
+    .navbar-collapse {
+      background: rgba(0, 184, 148, 0.9);
+      border-radius: 10px;
+      padding: 10px;
+    }
+  
+    .nav-link {
+      display: block;
+      text-align: center;
+      margin: 6px 0;
+    }
+  
+    .navbar-brand {
+      font-size: 1.4rem;
+    }
+  }
+  
+  /* ======================================================
+     ANIMACIONES
+  ====================================================== */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* ======================================================
+     DETALLES VISUALES EXTRA
+  ====================================================== */
+  .navbar-nav .nav-link i {
+    margin-right: 5px;
+    font-size: 1.1rem;
+  }
+  
+  .dropdown-toggle i {
+    font-size: 1.3rem;
+  }
+  
+  .navbar-toggler {
+    border: none;
+  }
+  
+  .navbar-toggler:focus {
+    box-shadow: none;
+  }
+  
