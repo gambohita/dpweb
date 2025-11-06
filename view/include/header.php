@@ -61,7 +61,8 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white fw-semibold" href="<?= BASE_URL ?>">
-                            <i class="bi bi-truck"></i> Shops
+                            <i class="bi bi-truck"></i> tienda
+                        
                         </a>
                     </li>
                     <li class="nav-item">
