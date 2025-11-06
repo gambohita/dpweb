@@ -45,6 +45,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="<?= BASE_URL ?>vista-producto">
+                            <i class="bi bi-truck"></i> vista-producto
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-white fw-semibold" href="<?= BASE_URL ?>categoria">
                             <i class="bi bi-tags"></i> Categories
                         </a>
@@ -61,8 +66,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white fw-semibold" href="<?= BASE_URL ?>">
-                            <i class="bi bi-truck"></i> tienda
-                        
+                            <i class="bi bi-truck"></i> Shops
                         </a>
                     </li>
                     <li class="nav-item">
@@ -70,6 +74,7 @@
                             <i class="bi bi-truck"></i> Sales
                         </a>
                     </li>
+                   
                 </ul>
 
                 <ul class="navbar-nav">
