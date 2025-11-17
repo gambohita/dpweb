@@ -1,16 +1,13 @@
 <?php
-// Se incluye el archivo de conexión para poder interactuar con la base de datos
 require_once("../library/conexion.php");
-
-// Clase con todas las funciones relacionadas con la tabla producto 
 class ProductoModel
 {
-    // Atributo privado para almacenar la conexión con la base de datos
+    
     private $conexion;
 
     function __construct()
     {
-        // Se crea una nueva instancia de la clase Conexion
+       
         $this->conexion = new Conexion();
         $this->conexion = $this->conexion->connect();
     }
@@ -129,5 +126,16 @@ class ProductoModel
         $resultado = $stmt->execute();
         $stmt->close();
         return ["status" => $resultado, "msg" => $resultado ? "Producto eliminado correctamente" : "Error al eliminar el producto"];
+    }
+    // Buscar productos por nombre o código
+    public function BuscarProductoByNombreOrCodigo($dato){
+        $arr_productos = array();
+        $consulta = "SELECT * FROM producto WHERE codigo LIKE '%$dato%' OR nombre LIKE '%$dato%' OR detalle LIKE '%$dato%'";
+        $sql = $this->conexion->query($consulta);
+        while ($objeto = $sql->fetch_object()) {
+            array_push($arr_productos, $objeto);
+        }
+
+        return $arr_productos;
     }
 }

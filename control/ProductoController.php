@@ -72,7 +72,7 @@ if ($tipo == 'registrar') {
     if ($id > 0) {
         $arrResponse = array('status' => true, 'msg' => 'Registrado correctamente', 'id' => $id, 'img' => $rutaRelativa);
     } else {
-        @unlink($rutaFisica); 
+        @unlink($rutaFisica);
         $arrResponse = array('status' => false, 'msg' => 'Error, fallo en registro');
     }
 
@@ -94,9 +94,9 @@ if ($tipo == 'obtener_producto') {
 }
 
 // actualizar
-if ($tipo == "actualizar_producto"){
-    
-   $data = $_POST;
+if ($tipo == "actualizar_producto") {
+
+    $data = $_POST;
     error_log("Datos recibidos en controlador: " . print_r($data, true));
 
     $nombre = $data['nombre'];
@@ -109,7 +109,7 @@ if ($tipo == "actualizar_producto"){
         echo json_encode(['status' => false, 'msg' => 'Error, producto ya existe.']);
     } else {
 
-       require_once("../model/CategoriaModel.php");
+        require_once("../model/CategoriaModel.php");
         $objCategoria = new CategoriaModel();
         if ($id_categoria && !$objCategoria->obtenerCategoriaPorId($id_categoria)) {
             echo json_encode(['status' => false, 'msg' => 'Error, la categoría no existe']);
@@ -151,7 +151,7 @@ if ($tipo == "actualizar_producto"){
                     @unlink("../" . $producto->imagen);
                 }
             }
-           
+
             if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
                 $target_dir = "../Uploads/productos/";
                 if (!file_exists($target_dir)) {
@@ -177,4 +177,13 @@ if ($tipo == "eliminar_producto") {
     $id = $_GET['id'] ?? 0;
     $result = $objProducto->eliminarProducto($id);
     echo json_encode($result);
+}
+if ($tipo == "buscar_productos_venta") {
+    $dato = $_POST['dato'] ?? '';
+    $respuesta = array('status' => false, 'msg' => 'No se encontraron productos');
+    $productos = $objProducto->BuscarProductoByNombreOrCodigo($dato);
+
+       
+        $respuesta = array('status' => true, 'msg' => '', 'data' => $productos);
+    echo json_encode($respuesta);
 }

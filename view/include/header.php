@@ -66,6 +66,7 @@
 
     <!-- JS -->
     <script src="<?php echo BASE_URL; ?>view/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>view/function/navbar.js"></script>
+    
+   
 </body>
 </html>
