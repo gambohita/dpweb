@@ -48,3 +48,4 @@ async function cargarProductosTienda() {
 }
 
 document.addEventListener('DOMContentLoaded', cargarProductosTienda);
+
