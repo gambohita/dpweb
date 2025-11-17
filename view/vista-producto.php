@@ -9,9 +9,10 @@
 
 <body>
   <div>
-    <h4 class="text-center mt-3" style="color: #ff0022ff; font-weight: bold;">
+    <h4 class="text-center mt-3" style="color: #007bff; font-weight: bold;">
       PRODUCTOS EN LÍNEA
     </h4>
+
     <!-- 🔍 Barra de búsqueda -->
     <div class="container mt-3 mb-3 text-center">
       <input type="text" class="form-control d-inline-block"
@@ -19,22 +20,29 @@
         id="busqueda_venta" onkeyup="lista_productos_venta()" ;>
     </div>
 
-    <!-- ✅ Contenedor principal de productos y carrito en una sola fila -->
+    <!-- ✅ Contenedor principal -->
     <div class="container mt-4">
       <div class="row">
 
-        <!-- 🧩 Productos a la izquierda -->
+        <!-- 🧩 Productos (en su propio cuadro) -->
         <div class="col-md-8">
-          <div class="row" id="productos_ventas">
-            <div id="contenedor_productos" class="row">
-              <!-- Ejemplo de producto -->
-              <div class="col-md-6 mb-4">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Producto 1</h5>
-                    <p class="card-text">Descripción breve del producto.</p>
-                    <p class="fw-bold">$10.00</p>
-                    <button class="btn btn-primary btn-sm">Agregar al carrito</button>
+          <div class="card border rounded shadow-sm mb-4">
+            <div class="card-header bg-white fw-bold fs-5">
+              Lista de Productos
+            </div>
+            <div class="card-body">
+              <div class="row" id="productos_ventas">
+                <div id="contenedor_productos" class="row">
+                  <!-- Ejemplo de producto -->
+                  <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                      <div class="card-body text-center">
+                        <h5 class="card-title">Producto 1</h5>
+                        <p class="card-text">Descripción breve del producto.</p>
+                        <p class="fw-bold">$10.00</p>
+                        <button class="btn btn-primary btn-sm">Agregar al carrito</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -42,11 +50,11 @@
           </div>
         </div>
 
-        <!-- 🛒 Carrito de compras a la derecha -->
+        <!-- 🛒 Carrito (también en su propio cuadro) -->
         <div class="col-md-4">
           <div id="carrito_panel" class="card border rounded shadow-sm">
             <div class="card-header bg-white fw-bold fs-5">
-              Lista de Compra
+               Lista de Compra
             </div>
 
             <div class="card-body p-3" id="carrito_contenedor">
