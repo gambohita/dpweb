@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Vista Productos</title>
-  <link rel="stylesheet" href="view/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -13,18 +13,18 @@
       PRODUCTOS EN LÍNEA
     </h4>
 
-    <!-- 🔍 Barra de búsqueda -->
+    <!--  Barra de búsqueda -->
     <div class="container mt-3 mb-3 text-center">
       <input type="text" class="form-control d-inline-block"
         placeholder="Buscar producto por nombre o código..."
         id="busqueda_venta" onkeyup="lista_productos_venta()" ;>
     </div>
 
-    <!-- ✅ Contenedor principal -->
+    <!--  Contenedor principal -->
     <div class="container mt-4">
       <div class="row">
 
-        <!-- 🧩 Productos (en su propio cuadro) -->
+        <!--  Productos (en su propio cuadro) -->
         <div class="col-md-8">
           <div class="card border rounded shadow-sm mb-4">
             <div class="card-header bg-white fw-bold fs-5">
