@@ -17,9 +17,9 @@
         <th><i class="bi bi-info-circle"></i> Detalle</th>
         <th><i class="bi bi-cash"></i> Precio</th>
         <th><i class="bi bi-boxes"></i> Stock</th>
-     
         <th><i class="bi bi-calendar-x"></i> Vencimiento</th>
         <th><i class="bi bi-tags"></i> Categoría</th>
+        <th><i class="bi bi-building"></i> codigo barra</th>
         <th><i class="bi bi-gear"></i> Acciones</th>
       </tr>
     </thead>
@@ -28,3 +28,4 @@
 </div>
 
 <script src="<?= BASE_URL ?>view/function/products.js"></script>
+<script src="<?= BASE_URL ?>view/function/JsBarcode.all.min.js"></script>

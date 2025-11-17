@@ -16,7 +16,7 @@ async function cargarProductosTienda() {
 
         let html = '';
 
-        productos.forEach(p => {
+        productos.data.forEach(p => {
             const imagen = p.imagen
                 ? base_url + p.imagen.replace('../', '')
                 : 'https://via.placeholder.com/300x200?text=Sin+Imagen';
