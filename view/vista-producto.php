@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Vista Productos</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -17,7 +17,12 @@
     <div class="container mt-3 mb-3 text-center">
       <input type="text" class="form-control d-inline-block"
         placeholder="Buscar producto por nombre o código..."
-        id="busqueda_venta" onkeyup="lista_productos_venta()" ;>
+
+        id="busqueda_venta" onkeyup="lista_productos_venta();">
+        <input type="hidden" id="id_producto_venta">
+        <input type="hidden" id="producto_precio_venta">
+        <input type="hidden" id="producto_cantidad_venta" value="1">
+      
     </div>
 
     <!--  Contenedor principal -->
@@ -54,7 +59,7 @@
         <div class="col-md-4">
           <div id="carrito_panel" class="card border rounded shadow-sm">
             <div class="card-header bg-white fw-bold fs-5">
-               Lista de Compra
+              Lista de Compra
             </div>
 
             <div class="card-body p-3" id="carrito_contenedor">
@@ -91,9 +96,9 @@
           </div>
         </div>
 
-      </div> 
-    </div> 
-  </div> 
+      </div>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script src="view/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -102,6 +107,14 @@
   <script src="<?= BASE_URL ?>view/function/venta.js"></script>
   <script>
     lista_productos_venta();
+  </script>
+  <script>
+    let input = document.getElementById('busqueda_venta');
+    input.addEventListener('keydown',  (event) => {
+      if (event.key === 'Enter') {
+        agregar_producto_temporal();
+      }
+    });
   </script>
 
 </body>

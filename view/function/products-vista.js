@@ -8,7 +8,7 @@ async function lista_productos_venta() {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
-            
+
             body: datos
         });
 
@@ -18,6 +18,7 @@ async function lista_productos_venta() {
         let html = '';
         if (json.status && json.data.length > 0) {
             json.data.forEach(p => {
+
                 const imagen = p.imagen ? base_url + p.imagen : 'view/img/default.jpg';
                 html += `
                 <div class="card m-2 col-3">
@@ -30,12 +31,19 @@ async function lista_productos_venta() {
                         <button onclick="agregarAlCarrito(${p.id})" class="btn btn-primary">Agregar</button>
                     </div>
                 </div>`;
+                let id = document.getElementById('id_producto_venta');
+                let precio = document.getElementById('producto_precio_venta');
+                let cantidad = document.getElementById('producto_cantidad_venta');
+                id.value = p.id;
+                precio.value = p.precio;
+                cantidad.value = 1;
             });
         } else {
             html = '<div class="col-12 text-center"><h4 class="text-muted">No se encontraron productos</h4></div>';
         }
 
         document.getElementById('productos_ventas').innerHTML = html;
+
 
     } catch (error) {
         console.error("Error al buscar productos:", error);

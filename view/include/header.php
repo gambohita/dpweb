@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Ventas</title>
+    <title>mi tienda</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>view/img/gati.jpg">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,13 +22,17 @@
     </script>
 </head>
 
+
 <body>
     <!-- 🟩 Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold text-white" href="#">
-                <i class="bi bi-shop"></i> Mi Tienda
-            </a>
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold text-white d-flex align-items-center" href="#">
+            <img src="<?php echo BASE_URL; ?>view/img/gati.jpg" alt="Logo" width="50" height="50" class="me-2 rounded-circle">
+            <span>Mi Tienda</span>
+        </a>
+        <!-- resto del código igual -->
+
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -46,6 +53,8 @@
                     <li class="nav-item"><a class="nav-link text-white fw-semibold" href="<?= BASE_URL ?>categoria"><i class="bi bi-tags"></i> Categories</a></li>
                     <li class="nav-item"><a class="nav-link text-white fw-semibold" href="<?= BASE_URL ?>cliente"><i class="bi bi-person-check"></i> Clientes</a></li>
                     <li class="nav-item"><a class="nav-link text-white fw-semibold" href="<?= BASE_URL ?>proveedor"><i class="bi bi-truck"></i> Proveedor</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-semibold" href="<?= BASE_URL ?>ventas"><i class="bi bi-cart4"></i> Ventas</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-semibold" href="<?= BASE_URL ?>reportes"><i class="bi bi-bar-chart-line"></i> Reportes</a></li>
                 </ul>
 
                 <ul class="navbar-nav">
