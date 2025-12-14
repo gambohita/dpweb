@@ -12,7 +12,7 @@ if ($tipo == "registrar_Temporal") {
     $precio = $_POST['precio'];
     $cantidad = $_POST['cantidad'];
 
-    $b_producto = $objVenta->buscarTemporal($id_producto);
+    $b_producto = $objVenta->buscarTemporal();
     if ($b_producto) {
     
         $objVenta->actualizarCantidadTemporal($id_producto, $cantidad);
