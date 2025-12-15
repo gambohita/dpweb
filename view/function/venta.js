@@ -213,3 +213,21 @@ async function buscar_cliente_venta() {
         console.log("error al buscar cliente por dni " + error);
     }
 }
+async function registrarventa() {
+    let id_cliente = document.getElementById('id_cliente_venta').value;
+    let fecha_venta = document.getElementById('fecha_venta').value;
+    try {
+        const datos = new FormData();
+        datos.append('id_cliente', id_cliente);
+        datos.append('fecha_venta', fecha_venta); 
+        let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=registrar_venta', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        let json = await respuesta.json();  
+    } catch (error) {
+        console.log("error al registrar venta " + error);
+    }
+}

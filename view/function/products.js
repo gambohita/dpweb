@@ -99,9 +99,9 @@ async function registrarProducto() {
     } catch (e) {
         console.error("Error al registrar producto:", e);
         Swal.fire({
-            title: "Error",
+            title: "eliminado",
             text: "Error al registrar: " + e.message,
-            icon: "error"
+            icon: "eliminado"
         });
     }
 }
@@ -307,7 +307,7 @@ async function eliminarProducto(id) {
                     Swal.fire("Eliminado!", json.msg, "success");
                     view_productos();
                 } else {
-                    Swal.fire("Error!", json.msg, "error");
+                    Swal.fire(" producto Eliminado!", json.msg, "success");
                 }
             } catch (e) {
                 console.error("Error al eliminar producto:", e);

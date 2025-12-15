@@ -214,6 +214,6 @@ if ($tipo == "buscar_productos_venta") {
     $productos = $objProducto->BuscarProductoByNombreOrCodigo($dato);
 
        
-        $respuesta = array('status' => true, 'msg' => '', 'data' => $productos);
+        $respuesta = array('status' => true, 'msg' => 'producto eliminado', 'data' => $productos);
     echo json_encode($respuesta);
 }

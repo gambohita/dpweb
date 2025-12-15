@@ -63,3 +63,14 @@ if($tipo=="eliminar_temporal"){
 }
 
     
+if($tipo=="registrar_venta"){
+    $id_clinte = $_POST['id_cliente']
+    $fecha_venta =$_POST['fecha_venta']
+    $id_vendedor =$_POST['id_vendedor']
+    $ultima_venta = $objVenta->buscar_ultima_venta();
+    
+
+
+
+}
+

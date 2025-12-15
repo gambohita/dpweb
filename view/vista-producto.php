@@ -93,8 +93,13 @@
               <input type="text" class="form-control" id="cliente_nombre" name="cliente_nombre" readonly>
               <input type="hidden" class="form-control" id="cliente_venta">
             </div>
+            <div class="col-md-6">
+              <label for="fecha_venta">fecha de venta</label>
+              <input type="datetime" class="form-control" id="fecha_venta" name="fecha_venta" value="<?= date('Y-m-d H:i') ?>">
+            </div>
+          </div>
 
-          <div>
+
 
         </form>
       </div>

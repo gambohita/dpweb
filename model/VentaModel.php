@@ -66,5 +66,11 @@ class VentaModel
         return $sql;
     }
     //---------------ventas registradas (oficiales)-------------------
+    public function buscar_ultima_venta(){
+        $consulta = "SELECT codigo FROM venta ORDER BY id DESC LIMIT 1";
+        $sql = $this-> conexion 
+    }
+
+
 
 }
