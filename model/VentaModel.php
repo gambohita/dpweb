@@ -13,9 +13,9 @@ class VentaModel
     }
     public function registrar_temporal($id_producto, $precio, $cantidad)
     {
-        $sql = "INSERT INTO temporal_venta (id_producto, precio, cantidad) 
+        $consulta = "INSERT INTO temporal_venta (id_producto, precio, cantidad) 
       VALUES ('$id_producto', '$precio', '$cantidad')";
-        $sql = $this->conexion->query($sql);
+        $sql = $this->conexion->query($consulta);
         if ($sql) {
             return $this->conexion->insert_id;
         }
@@ -23,14 +23,20 @@ class VentaModel
     }
     public function actualizarCantidadTemporal($id_producto, $cantidad)
     {
-        $consulta = "UPDATE temporal_venta SET cantidad = cantidad + $cantidad WHERE id_producto = '$id_producto'";
+        $consulta = "UPDATE temporal_venta SET cantidad='$cantidad' WHERE id_producto='$id_producto'";
         $sql = $this->conexion->query($consulta);
         return $sql;
     }
-    public function buscarTemporales($id_producto)
+    public function  actualizarCantidadTemporalByid($id, $cantidad)
+    {
+        $consulta = "UPDATE temporal_venta SET cantidad = '$cantidad' WHERE id = '$id'";
+        $sql = $this->conexion->query($consulta);
+        return $sql;
+    }
+    public function buscarTemporales()
     {
         $arr_temporal = array();
-        $consulta = "SELECT * FROM temporal_venta";
+        $consulta = "SELECT tv.*, p.nombre FROM temporal_venta tv INNER JOIN producto p ON tv.id_producto = p.id";
         $sql = $this->conexion->query($consulta);
         while ($objeto = $sql->fetch_object()) {
             array_push($arr_temporal, $objeto);
@@ -39,15 +45,13 @@ class VentaModel
     }
 
 
-    public function buscarTemporal()
+    public function buscarTemporal($id_producto)
     {
-        $arr_temporal = array();
-        $consulta = "SELECT * FROM temporal_venta";
-        $result = $this->conexion->query($consulta);
-        while ($objeto = $result->fetch_object()) {
-            array_push($arr_temporal, $objeto);
-        }
-        return $arr_temporal;
+        $consulta = "SELECT * FROM temporal_venta WHERE id_producto= '$id_producto'";
+        $sql = $this->conexion->query($consulta);
+        return $sql->fetch_object();
+        
+        
     }
     public function eliminarTemporal($id)
     {

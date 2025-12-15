@@ -161,11 +161,20 @@ async function actualizarProducto() {
 }
 
 async function obtenerProductoPorId(id) {
+
     try {
-        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=obtener_producto&id=' + id);
-        let producto = await respuesta.json();
-        console.log("Producto recibido:", producto); // Verifica en la consola
-        if (producto) {
+        const datos = new FormData();
+        datos.append('id_producto', id);
+        let respuesta = await fetch(base_url + 'control/ProductoController.php?tipo=ver', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        let json = await respuesta.json();
+        console.log("Producto recibido:", json); // Verifica en la consola
+        if (json.status) {
+            let producto = json.data;
             document.getElementById('id_producto').value = producto.id || '';
             document.getElementById('codigo').value = producto.codigo || '';
             document.getElementById('nombre').value = producto.nombre || '';
@@ -221,11 +230,11 @@ async function view_productos() {
         });
 
         let json = await respuesta.json();
-        console.log("Productos recibidos:", json); // Agrega esto para depurar
+        console.log("Productos recibidos:", json); 
         let content_productos = document.getElementById('content_productos');
-        if (content_productos) {
+        if (content_productos && json.status) {
             content_productos.innerHTML = '';
-            json.forEach((producto, index) => {
+            json.data.forEach((producto, index) => {
                 let fila = document.createElement('tr');
                 fila.classList.add('text-center');
                 fila.innerHTML = `

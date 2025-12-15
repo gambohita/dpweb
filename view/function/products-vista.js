@@ -8,45 +8,65 @@ async function lista_productos_venta() {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
-
             body: datos
         });
 
-        const json = await respuesta.json();
-        console.log("productos_ventas:", json);
-
-        let html = '';
-        if (json.status && json.data.length > 0) {
+        json = await respuesta.json();
+        contenidot = document.getElementById('productos_ventas')
+        if (json.status) {
+            let cont = 1;
+            contenidot.innerHTML = ``;
             json.data.forEach(p => {
-
-                const imagen = p.imagen ? base_url + p.imagen : 'view/img/default.jpg';
-                html += `
-                <div class="card m-2 col-3">
-                    <img src="${imagen}" alt="${p.nombre}" width="100%" height="150px" style="object-fit: cover;">
+                let producto_list = ``;
+                producto_list += `
+                <div class="col-6 col-sm-4 col-md-3 mb-4">
+                  <div class="card h-100 shadow-sm text-center p-2" style="min-width: 180px;">
+                    <img src="${base_url + p.imagen}" 
+                         alt="${p.nombre}" 
+                         class="card-img-top mx-auto d-block"
+                         style="height: 150px; width: 100%; object-fit: contain;">
+              
                     <div class="card-body">
-                        <h5 class="card-title">${p.nombre}</h5>
-                        <p class="card-text">${p.detalle ?? 'Sin descripción'}</p>
-                        <p class="card-text text-success fw-bold">$${parseFloat(p.precio).toFixed(2)}</p>
-                        <p class="card-text"><span class="badge bg-secondary">${p.categoria}</span></p>
-                        <button onclick="agregarAlCarrito(${p.id})" class="btn btn-primary">Agregar</button>
+                      <h5 class="card-title fw-bold" style="font-size: 1.1rem; color:#333;">
+                        ${p.nombre}
+                      </h5>
+                      <p class="card-text text-success fw-semibold" style="font-size: 1rem;">
+                        Precio: S/. ${p.precio}
+                      </p>
+                      <p class="card-text" style="font-size: 0.9rem;">
+                        <span class="badge bg-secondary">Stock: ${p.stock}</span>
+                      </p>
+                      <button onclick="agregar_producto_venta(${p.id})" 
+                              class="btn btn-primary btn-sm">
+                        Agregar
+                      </button>
                     </div>
-                </div>`;
+                  </div>
+                </div>
+              `;
+              
+
+                let nueva_fila = document.createElement("div");
+                nueva_fila.className = "div col-md-3 col-sm-6 col-xs-12"
+                nueva_fila.innerHTML = producto_list;
+                cont ++;
+                contenidot.appendChild(nueva_fila);
+
                 let id = document.getElementById('id_producto_venta');
                 let precio = document.getElementById('producto_precio_venta');
                 let cantidad = document.getElementById('producto_cantidad_venta');
                 id.value = p.id;
                 precio.value = p.precio;
                 cantidad.value = 1;
-            });
-        } else {
-            html = '<div class="col-12 text-center"><h4 class="text-muted">No se encontraron productos</h4></div>';
+            })
         }
-
-        document.getElementById('productos_ventas').innerHTML = html;
-
 
     } catch (error) {
         console.error("Error al buscar productos:", error);
-        document.getElementById('productos_ventas').innerHTML = '<div class="col-12 text-center text-danger">Error al buscar productos</div>';
+       
     }
+
+}
+if(document.getElementById('productos_venta')){
+    lista_productos_venta();
 }

@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Vista Productos</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-</head>
-
-<body>
   <div>
     <h4 class="text-center mt-3" style="color: #007bff; font-weight: bold;">
       PRODUCTOS EN LÍNEA
@@ -36,20 +27,9 @@
               Lista de Productos
             </div>
             <div class="card-body">
-              <div class="row" id="productos_ventas">
-                <div id="contenedor_productos" class="row">
-                  <!-- Ejemplo de producto -->
-                  <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                      <div class="card-body text-center">
-                        <h5 class="card-title">Producto 1</h5>
-                        <p class="card-text">Descripción breve del producto.</p>
-                        <p class="fw-bold">$10.00</p>
-                        <button class="btn btn-primary btn-sm">Agregar al carrito</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div class="row" id="productos_ventas"></div>
+                <div id="contenedor_productos" class="">
+                  
               </div>
             </div>
           </div>
@@ -58,7 +38,7 @@
         <!-- 🛒 Carrito (también en su propio cuadro) -->
         <div class="col-md-4">
           <div id="carrito_panel" class="card border rounded shadow-sm">
-            <div class="card-header bg-white fw-bold fs-5">
+            <div class="card-header bg-white fw-bold fs-10">
               Lista de Compra
             </div>
 
@@ -73,23 +53,15 @@
                     <th>Acción</th>
                   </tr>
                 </thead>
-                <tbody id="carrito_tabla">
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button class="btn btn-danger btn-sm">Eliminar</button></td>
-                  </tr>
+                <tbody id="lista_compra">
+                
                 </tbody>
               </table>
 
-              <hr>
-
               <div class="text-end pe-2">
-                <p class="mb-1 fw-semibold">Subtotal : <span class="fw-normal">$00.00</span></p>
-                <p class="mb-1 fw-semibold">IGV : <span class="fw-normal">$00.00</span></p>
-                <p class="mb-3 fw-semibold">Total : <span class="fw-normal">$00.00</span></p>
+                <h6 class="mb-1 fw-semibold">Subtotal : <label class="fw-normal" id="subtotal_general"></label></h6>
+                <h6 class="mb-1 fw-semibold">IGV : <label class="fw-normal" id="igv_general"></label></h6>
+                <h6 class="mb-3 fw-semibold">Total : <label class="fw-normal" id="total"></label></h6>
                 <button class="btn btn-success btn-sm">Realizar Venta</button>
               </div>
             </div>
@@ -102,8 +74,8 @@
 
   <!-- Scripts -->
   <script src="view/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="view/function/products-vista.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="view/function/products-vista.js"></script>
   <script src="<?= BASE_URL ?>view/function/venta.js"></script>
   <script>
     lista_productos_venta();
@@ -113,10 +85,11 @@
     input.addEventListener('keydown',  (event) => {
       if (event.key === 'Enter') {
         agregar_producto_temporal();
+
       }
     });
+    listar_temporales();
+    
+   act_subt_general();
   </script>
 
-</body>
-
-</html>

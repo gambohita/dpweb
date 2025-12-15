@@ -1,6 +1,7 @@
 <?php
 require_once("../model/VentaModel.php");
 require_once("../model/productoModel.php");
+
 $objProducto = new ProductoModel();
 $objVenta = new VentaModel();
 
@@ -12,21 +13,41 @@ if ($tipo == "registrar_Temporal") {
     $precio = $_POST['precio'];
     $cantidad = $_POST['cantidad'];
 
-    $b_producto = $objVenta->buscarTemporal();
+    $b_producto = $objVenta->buscarTemporal($id_producto);
     if ($b_producto) {
+        $n_cantidad = $b_producto->cantidad+1;
     
-        $objVenta->actualizarCantidadTemporal($id_producto, $cantidad);
-        $respuesta =  array('status' => true, 'msg' => 'producto registrado');
+        $objVenta->actualizarCantidadTemporal($id_producto, $n_cantidad);
+        $respuesta =  array('status' => true, 'msg' => 'producto actualizado');
     }else {
         $registro = $objVenta->registrar_temporal($id_producto, $precio, $cantidad);
-        $respuesta = array('status' => true, 'msg' => 'Producto registrado temporalmente');
+        $respuesta = array('status' => true, 'msg' => 'Producto registrado');
     }
     echo json_encode($respuesta);
     
-
-
-    
 }
+if($tipo=="lista_venta_temporal"){
+    $respuesta = array('status' => false, 'msg' =>'fallo el controlador');
+    $b_producto = $objVenta->buscarTemporales();
+    if ($b_producto) {
+        $respuesta = array('status' => true, 'data' => $b_producto);
 
+    }else{
+        $respuesta = array('status' => false, 'msg' => 'no se encontraron datos');
+    }
+    echo json_encode($respuesta);
+}
+if($tipo=="actualizar_cantidad"){
+    $id = $_POST['id'];
+    $cantidad =  $_POST['cantidad'];
+    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
+    $consulta = $objVenta-> actualizarCantidadTemporalByid($id, $cantidad);
+    if ($consulta) {
+        $respuesta = array('status' => true, 'msg' => 'success');
+    }else {
+        $respuesta = array('status' => false, 'msg' => 'error');
+    }
+    echo json_encode($respuesta);
+}
 
     

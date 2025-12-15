@@ -21,112 +21,83 @@ class ProductoModel
         $sql = $this->conexion->query($consulta);
         return $sql->num_rows;
     }
-//
-    public function registrar($codigo, $nombre, $detalle, $precio, $stock, $fecha_vencimiento, $imagen, $id_categoria = NULL, $id_proveedor = NULL)
+
+    public function existeCategoria($nombre)
     {
-        $stmt = $this->conexion->prepare("INSERT INTO producto (codigo, nombre, detalle, precio, stock, fecha_vencimiento, imagen, id_categoria, id_proveedor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        // Convertir id_proveedor a NULL si es una cadena vacía
-    $id_proveedor = ($id_proveedor === '' || $id_proveedor === null) ? null : (int)$id_proveedor;
-        $stmt->bind_param("ssssdssis", $codigo, $nombre, $detalle, $precio, $stock, $fecha_vencimiento, $imagen, $id_categoria, $id_proveedor);
-        $sql = $stmt->execute();
-        $id = $sql ? $this->conexion->insert_id : 0;
-        $stmt->close();
-        return $id;
-    }
-//
-    public function existeProducto($nombre)
-    {
-        $stmt = $this->conexion->prepare("SELECT * FROM producto WHERE nombre = ?");
-        $stmt->bind_param("s", $nombre);
-        $stmt->execute();
-        $sql = $stmt->get_result();
+        $consulta = "SELECT * FROM producto WHERE nombre ='$nombre'";
+        $sql = $this->conexion->query($consulta);
         return $sql->num_rows;
     }
 
+    public function registrar($codigo, $nombre, $detalle, $precio, $stock, $fecha_vencimiento, $imagen, $id_categoria, $id_proveedor)
+    {
+        $codigo = $this->conexion->real_escape_string($codigo);
+        $nombre = $this->conexion->real_escape_string($nombre);
+        $detalle = $this->conexion->real_escape_string($detalle);
+        $precio = $this->conexion->real_escape_string($precio);
+        $stock = $this->conexion->real_escape_string($stock);
+        $fecha_vencimiento = $this->conexion->real_escape_string($fecha_vencimiento);
+        $imagen = $this->conexion->real_escape_string($imagen);
+        $id_categoria = $this->conexion->real_escape_string($id_categoria);
+        $id_proveedor = $this->conexion->real_escape_string($id_proveedor);
+        $consulta = "INSERT INTO producto (codigo, nombre, detalle, precio, stock, fecha_vencimiento, imagen, id_categoria, id_proveedor) VALUES ('$codigo', '$nombre', '$detalle', '$precio', '$stock', '$fecha_vencimiento', '$imagen', '$id_categoria', '$id_proveedor')";
+        $sql = $this->conexion->query($consulta);
+        if($sql){
+            return $this->conexion->insert_id;
+        }
+        return 0;
+
+    }
+
    public function verProductos()
-{
-    $arr_productos = array();
-    $consulta = "SELECT p.*, c.nombre AS categoria 
-                 FROM producto p 
-                 LEFT JOIN categoria c ON p.id_categoria = c.id";
+    {
+    $arr_categorias = array();
+    $consulta = "SELECT * FROM producto";
     $sql = $this->conexion->query($consulta);
     while ($objeto = $sql->fetch_object()) {
-        array_push($arr_productos, $objeto);
+        array_push($arr_categorias, $objeto);
     }
-    return $arr_productos;
-}
+    return $arr_categorias;
+    }
 
-
-
-   public function obtenerProductoPorId($id) {
-    $stmt = $this->conexion->prepare("SELECT * FROM producto WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-
-    $resultado = $stmt->get_result();
-    $producto = $resultado->fetch_assoc();
-    
-    // Depuración: Imprimir el resultado para verificar los datos
-    error_log("Producto obtenido por ID $id: " . print_r($producto, true));
-    
-    return $producto;
-}
-
-    public function buscarPorNombre($nombre)
+    public function ver($id)
     {
-        $stmt = $this->conexion->prepare("SELECT id FROM producto WHERE nombre = ?");
-        $stmt->bind_param("s", $nombre);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-        return $resultado->fetch_assoc();
+        $consulta = "SELECT * FROM producto WHERE id='$id'";
+        $sql = $this->conexion->query($consulta);
+        return $sql->fetch_object();
     }
 
- public function actualizarProducto($data)
+    public function actualizarProducto($id_producto, $codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento, $id_proveedor, $imagen = null)
 {
-    error_log("Datos recibidos en modelo: " . print_r($data, true));
-    $stmt = $this->conexion->prepare("UPDATE producto SET codigo = ?, nombre = ?, detalle = ?, precio = ?, stock = ?, fecha_vencimiento = ?, imagen = ?, id_categoria = ?, id_proveedor = ? WHERE id = ?");
+    $id_producto = $this->conexion->real_escape_string($id_producto);
+    $codigo = $this->conexion->real_escape_string($codigo);
+    $nombre = $this->conexion->real_escape_string($nombre);
+    $detalle = $this->conexion->real_escape_string($detalle);
+    $precio = floatval($precio);
+    $stock = intval($stock);
+    $id_categoria = intval($id_categoria);
+    $fecha_vencimiento = $this->conexion->real_escape_string($fecha_vencimiento);
+    $id_proveedor = intval($id_proveedor);
     
-    if ($stmt === false) {
-        error_log("Error al preparar la consulta: " . $this->conexion->error);
-        return false;
+    $consulta = "UPDATE producto SET codigo='$codigo', nombre='$nombre', detalle='$detalle', precio=$precio, stock=$stock, id_categoria=$id_categoria, fecha_vencimiento='$fecha_vencimiento', id_proveedor=$id_proveedor";
+
+    if (!empty($imagen)) {
+        $imagen = $this->conexion->real_escape_string($imagen);
+        $consulta .= ", imagen='$imagen'";
     }
-
-    $id_categoria = $data['id_categoria'] ? $data['id_categoria'] : NULL;
-    $id_proveedor = $data['id_proveedor'] ? (int)$data['id_proveedor'] : NULL; // Manejar id_proveedor
-    $stmt->bind_param(
-        "ssssdssiii", // Cambiado de "ssssdssi" a "ssssdssii" para incluir el tipo de id_producto
-        $data['codigo'],
-        $data['nombre'],
-        $data['detalle'],
-        $data['precio'],
-        $data['stock'],
-        $data['fecha_vencimiento'],
-        $data['imagen'],
-        $id_categoria,
-        $id_proveedor,
-        $data['id_producto']
-    );
-
-    $resultado = $stmt->execute();
-    if ($resultado === false) {
-        error_log("Error al ejecutar la consulta: " . $this->conexion->error);
-    } else {
-        error_log("Consulta ejecutada con éxito");
-    }
-
-    // Depuración después de la consulta
-    $stmt->close();
-    return $resultado;
+    
+    $consulta .= " WHERE id=$id_producto";
+    $sql = $this->conexion->query($consulta);
+    return $sql;
 }
 
     public function eliminarProducto($id)
     {
-        $stmt = $this->conexion->prepare("DELETE FROM producto WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $resultado = $stmt->execute();
-        $stmt->close();
-        return ["status" => $resultado, "msg" => $resultado ? "Producto eliminado correctamente" : "Error al eliminar el producto"];
+        $consulta = "DELETE FROM producto WHERE id='$id'";
+        $sql = $this->conexion->query($consulta);
+        return $sql;
     }
+
     // Buscar productos por nombre o código
     public function BuscarProductoByNombreOrCodigo($dato){
         $arr_productos = array();

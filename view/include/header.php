@@ -76,6 +76,3 @@
     <!-- JS -->
     <script src="<?php echo BASE_URL; ?>view/bootstrap/js/bootstrap.bundle.min.js"></script>
     
-   
-</body>
-</html>

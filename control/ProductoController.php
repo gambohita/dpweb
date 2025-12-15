@@ -1,7 +1,11 @@
 <?php
 
 require_once("../model/ProductoModel.php");
+require_once("../model/CategoriaModel.php");
+
 $objProducto = new ProductoModel();
+$objCategoria = new CategoriaModel();
+
 $tipo = $_GET['tipo'];
 
 //
@@ -79,97 +83,122 @@ if ($tipo == 'registrar') {
     echo json_encode($arrResponse);
     exit;
 }
-//
+
 if ($tipo == "ver_productos") {
+    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
     $productos = $objProducto->verProductos();
-    echo json_encode($productos);
+    $arrProduct = array();
+    if(count($productos)){
+        foreach ($productos as $producto){
+            $categoria = $objCategoria->ver($producto->id_categoria);
+            $producto->categoria = $categoria->nombre;
+            array_push($arrProduct, $producto);
+        }
+        $respuesta = array('status' => true, 'msg' => '', 'data' => $arrProduct);
+    }
+    echo json_encode($respuesta);
 }
 
-if ($tipo == 'obtener_producto') {
-    header('Content-Type: application/json');
-    $id = $_GET['id'];
-    $producto = $objProducto->obtenerProductoPorId($id);
-    echo json_encode($producto);
-    exit;
+if($tipo == "ver"){
+    $respuesta = array('status' => false, 'msg' => '');
+    $id_producto = $_POST['id_producto'];
+    $producto = $objProducto->ver($id_producto);
+    if($producto){
+        $respuesta['status'] = true;
+        $respuesta['data'] = $producto;
+    }else{
+        $respuesta['msg'] = 'Error, producto no existe';
+    }
+    echo json_encode($respuesta);
+}
+
+if ($tipo == 'buscar_producto_venta') {
+    $dato = $_POST['dato'];
+    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
+    $productos = $objProducto->buscarProductoByNombreOrCodigo($dato);
+    $arrProduct = array();
+    if (count($productos)){
+        foreach ($productos as $producto){
+            $categoria = $objCategoria->ver($producto->id_categoria);
+            $producto->categoría = $categoria->nombre;
+            array_push($arrProduct, $producto);
+        }
+        $respuesta = array('status' => true, 'msg' => '', 'data' => $arrProduct);
+    }
+    echo json_encode($respuesta);
 }
 
 // actualizar
 if ($tipo == "actualizar_producto") {
 
-    $data = $_POST;
-    error_log("Datos recibidos en controlador: " . print_r($data, true));
+    //$data = $_POST;
+    $id_producto = $_POST['id_producto'] ?? '';
+    $codigo = $_POST['codigo'] ?? '';
+    $nombre             = $_POST['nombre'] ?? '';
+    $detalle            = $_POST['detalle'] ?? '';
+    $precio             = $_POST['precio'] ?? '';
+    $stock              = $_POST['stock'] ?? '';
+    $id_categoria       = $_POST['id_categoria'] ?? '';
+    $fecha_vencimiento  = $_POST['fecha_vencimiento'] ?? '';
+    $id_proveedor       = $_POST['id_persona'] ?? '';
+    if ($codigo === "" || $nombre === "" || $detalle === "" || $precio === "" || $stock === "" || $id_categoria === "" || $fecha_vencimiento === "" || $id_proveedor === "" ){
+        echo json_encode(['status' => false, 'msg' => 'Error, campos vacíos']);
+        exit;
+    }
+    
+    $producto = $objProducto->ver($id_producto);
+    if (!$producto) {
+        echo json_encode(['status' => false, 'msg' => 'Error, producto no existe en BD']);
+        exit;
+    }
+    
+    // Procesar la imagen si se ha subido una nueva
+    $imagen = $producto->imagen; // Mantener la imagen actual por defecto
+    
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['imagen'];
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $extPermitidas = ['jpg', 'jpeg', 'png'];
 
-    $nombre = $data['nombre'];
-    $id_actual = $data['id_producto'];
-    $id_categoria = $data['id_categoria'] ?? NULL;
-    $id_proveedor = $data['id_persona'] ?? NULL;
+        if (!in_array($ext, $extPermitidas)) {
+            echo json_encode(['status' => false, 'msg' => 'Formato de imagen no permitido']);
+            exit;
+        }
 
-    $verificar = $objProducto->buscarPorNombre($nombre);
-    if ($verificar && $verificar['id'] != $id_actual) {
-        echo json_encode(['status' => false, 'msg' => 'Error, producto ya existe.']);
-    } else {
+        if ($file['size'] > 5 * 1024 * 1024) { // 5MB
+            echo json_encode(['status' => false, 'msg' => 'La imagen supera 5MB']);
+            exit;
+        }
+        
+        $carpetaUploads = "../Uploads/productos/";
+        if (!is_dir($carpetaUploads)) {
+            @mkdir($carpetaUploads, 0775, true);
+        }
 
-        require_once("../model/CategoriaModel.php");
-        $objCategoria = new CategoriaModel();
-        if ($id_categoria && !$objCategoria->obtenerCategoriaPorId($id_categoria)) {
-            echo json_encode(['status' => false, 'msg' => 'Error, la categoría no existe']);
-        } else {
-            if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
-                //echo "NO SE ENVIO LA IMAGEN";
-                $imagen = $producto->imagen;
-            } else {
-                //echo "SE ENVIO LA IMAGEN";
-                //subir imagen en la carpeta en la carpeta uploat, obtener laruta de ese archivo y esa ruta almacenar en una variable imagen y enviar a la base de datos
-                $file = $_FILES['imagen'];
-                $ext  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-                $extPermitidas = ['jpg', 'jpeg', 'png'];
+        $nombreUnico = uniqid('prod_') . '.' . $ext;
+        $rutaFisica = $carpetaUploads . $nombreUnico;
+        $rutaRelativa = "uploads/productos/" . $nombreUnico;
 
-                if (!in_array($ext, $extPermitidas)) {
-                    echo json_encode(['status' => false, 'msg' => 'Formato de imagen no permitido']);
-                    exit;
-                }
-                if ($file['size'] > 5 * 1024 * 1024) { // 5MB
-                    echo json_encode(['status' => false, 'msg' => 'La imagen supera 2MB']);
-                    exit;
-                }
-                $carpetaUploads = "../uploads/productos/";
-                if (!is_dir($carpetaUploads)) {
-                    @mkdir($carpetaUploads, 0775, true);
-                }
-
-                $nombreUnico = uniqid('prod_') . '.' . $ext;
-                $rutaFisica  = $carpetaUploads . $nombreUnico;
-                $imagen = "uploads/productos/" . $nombreUnico;
-
-                if (!move_uploaded_file($file['tmp_name'], $rutaFisica)) {
-                    echo json_encode(['status' => false, 'msg' => 'No se pudo guardar la imagen']);
-                    exit;
-                }
-
-                // Opcional: Eliminar la imagen anterior si existe y no es la misma
-                if (!empty($producto->imagen) && file_exists("../" . $producto->imagen)) {
-                    @unlink("../" . $producto->imagen);
+        if (move_uploaded_file($file['tmp_name'], $rutaFisica)) {
+            // Eliminar la imagen anterior si existe
+            if (!empty($producto->imagen)) {
+                $rutaAnterior = "../" . str_replace(BASE_URL, "", $producto->imagen);
+                if (file_exists($rutaAnterior)) {
+                    @unlink($rutaAnterior);
                 }
             }
-
-            if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
-                $target_dir = "../Uploads/productos/";
-                if (!file_exists($target_dir)) {
-                    mkdir($target_dir, 0777, true);
-                }
-                $data['imagen'] = $target_dir . basename($_FILES["imagen"]["name"]);
-                move_uploaded_file($_FILES["imagen"]["tmp_name"], $data['imagen']);
-            } else {
-                $productoActual = $objProducto->obtenerProductoPorId($id_actual);
-                $data['imagen'] = $productoActual['imagen'];
-            }
-
-            $data['id_categoria'] = $id_categoria;
-            $data['id_proveedor'] = $id_proveedor; // Agregar id_proveedor
-            $actualizado = $objProducto->actualizarProducto($data);
-            echo json_encode(['status' => $actualizado, 'msg' => $actualizado ? 'Producto actualizado correctamente' : 'Error al actualizar']);
+            $imagen = $rutaRelativa;
         }
     }
+    
+    $actualizar = $objProducto->actualizarProducto($id_producto, $codigo, $nombre, $detalle, $precio, $stock, $id_categoria, $fecha_vencimiento, $id_proveedor, $imagen);
+    
+    if ($actualizar) {
+        echo json_encode(['status' => true, 'msg' => "Actualizado correctamente"]);
+    } else {
+        echo json_encode(['status' => false, 'msg' => 'Error al actualizar el producto']);
+    }
+    exit;
 }
 
 // eliminar producto 
@@ -178,6 +207,7 @@ if ($tipo == "eliminar_producto") {
     $result = $objProducto->eliminarProducto($id);
     echo json_encode($result);
 }
+
 if ($tipo == "buscar_productos_venta") {
     $dato = $_POST['dato'] ?? '';
     $respuesta = array('status' => false, 'msg' => 'No se encontraron productos');

@@ -39,6 +39,13 @@ class CategoriaModel
         return $arr_categorias;
     }
 
+    public function ver($id)
+    {
+        $consulta = "SELECT * FROM categoria WHERE id='$id'";
+        $sql = $this->conexion->query($consulta);
+        return $sql->fetch_object();
+    }
+
     public function obtenerCategoriaPorId($id)
     {
         $stmt = $this->conexion->prepare("SELECT * FROM categoria WHERE id = ?");
