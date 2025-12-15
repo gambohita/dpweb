@@ -17,7 +17,7 @@ productos_venta[id2] = producto2;
 console.log(productos_venta);
 
 // Añadir producto desde la vista de productos: establece los campos ocultos y agrega al temporal
-function agregar_producto_venta(id, precio) {
+function agregar_producto_venta(id,precio) {
     try {
         const inputId = document.getElementById('id_producto_venta');
         const inputPrecio = document.getElementById('producto_precio_venta');
