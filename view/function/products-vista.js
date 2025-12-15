@@ -11,8 +11,8 @@ async function lista_productos_venta() {
             body: datos
         });
 
-        json = await respuesta.json();
-        contenidot = document.getElementById('productos_ventas')
+        let json = await respuesta.json();
+        const contenidot = document.getElementById('productos_ventas')
         if (json.status) {
             let cont = 1;
             contenidot.innerHTML = ``;
@@ -36,10 +36,7 @@ async function lista_productos_venta() {
                       <p class="card-text" style="font-size: 0.9rem;">
                         <span class="badge bg-secondary">Stock: ${p.stock}</span>
                       </p>
-                      <button onclick="agregar_producto_venta(${p.id})" 
-                              class="btn btn-primary btn-sm">
-                        Agregar
-                      </button>
+                     <button onclick="agregar_producto_venta(${p.id}, ${p.precio})" class="btn btn-primary">Agregar</button>
                     </div>
                   </div>
                 </div>
@@ -47,17 +44,10 @@ async function lista_productos_venta() {
               
 
                 let nueva_fila = document.createElement("div");
-                nueva_fila.className = "div col-md-3 col-sm-6 col-xs-12"
+                nueva_fila.className = "col-md-3 col-sm-6 col-xs-12"
                 nueva_fila.innerHTML = producto_list;
                 cont ++;
                 contenidot.appendChild(nueva_fila);
-
-                let id = document.getElementById('id_producto_venta');
-                let precio = document.getElementById('producto_precio_venta');
-                let cantidad = document.getElementById('producto_cantidad_venta');
-                id.value = p.id;
-                precio.value = p.precio;
-                cantidad.value = 1;
             })
         }
 
@@ -67,6 +57,6 @@ async function lista_productos_venta() {
     }
 
 }
-if(document.getElementById('productos_venta')){
-    lista_productos_venta();
+if(document.getElementById('productos_ventas')){
+  lista_productos_venta();
 }

@@ -50,4 +50,16 @@ if($tipo=="actualizar_cantidad"){
     echo json_encode($respuesta);
 }
 
+if($tipo=="eliminar_temporal"){
+    $id = $_GET['id'];
+    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
+    $consulta = $objVenta->eliminarTemporal($id);
+    if ($consulta) {
+        $respuesta = array('status' => true, 'msg' => 'Producto eliminado');
+    } else {
+        $respuesta = array('status' => false, 'msg' => 'Error al eliminar el producto');
+    }
+    echo json_encode($respuesta);
+}
+
     
