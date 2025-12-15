@@ -216,6 +216,10 @@ async function buscar_cliente_venta() {
 async function registrarventa() {
     let id_cliente = document.getElementById('id_cliente_venta').value;
     let fecha_venta = document.getElementById('fecha_venta').value;
+    if (id_cliente === '' || fecha_venta === '') {
+        alert("Aviso", "Complete los datos del cliente y la fecha de venta.", "warning");
+        return;
+    }
     try {
         const datos = new FormData();
         datos.append('id_cliente', id_cliente);

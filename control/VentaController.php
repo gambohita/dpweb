@@ -37,6 +37,20 @@ if($tipo=="lista_venta_temporal"){
     }
     echo json_encode($respuesta);
 }
+
+
+if($tipo=="eliminar_temporal"){
+    $id = $_GET['id'];
+    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
+    $consulta = $objVenta->eliminarTemporal($id);
+    if ($consulta) {
+        $respuesta = array('status' => true, 'msg' => 'Producto eliminado');
+    } else {
+        $respuesta = array('status' => false, 'msg' => 'Error al eliminar el producto');
+    }
+    echo json_encode($respuesta);
+
+}
 if($tipo=="actualizar_cantidad"){
     $id = $_POST['id'];
     $cantidad =  $_POST['cantidad'];
@@ -49,28 +63,44 @@ if($tipo=="actualizar_cantidad"){
     }
     echo json_encode($respuesta);
 }
+if($tipo=="registrar_venta"){
 
-if($tipo=="eliminar_temporal"){
-    $id = $_GET['id'];
+    $correlativo = $_POST['correlativo'];
+    $fecha_venta = $_POST['fecha_venta'];
+    $id_cliente = $_POST['id_cliente'];
+    $id_vendedor = $_POST['id_vendedor'];
+
     $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
-    $consulta = $objVenta->eliminarTemporal($id);
-    if ($consulta) {
-        $respuesta = array('status' => true, 'msg' => 'Producto eliminado');
+    $venta = $objVenta->registrar_venta($correlativo, $fecha_venta, $id_cliente, $id_vendedor);
+if($venta){
+    //registrar los detalles de la venta
+    $temporales = $objVenta->buscarTemporales();
+    foreach($temporales as $temporal){
+        //registrar detalle
+        $objVenta->registrar_detalle_venta($venta, $temporal->id_producto, $temporal->precio, $temporal->cantidad);
+    }
+    //eliminar los temporales
+    $objVenta->eliminarTemporales();
+    $respuesta = array('status' => true, 'msg' => 'Venta realizada con exito');
     } else {
-        $respuesta = array('status' => false, 'msg' => 'Error al eliminar el producto');
+        $respuesta = array('status' => false, 'msg' => 'Error al registrar la venta');
     }
     echo json_encode($respuesta);
+
+    
 }
 
     
-if($tipo=="registrar_venta"){
-    $id_clinte = $_POST['id_cliente']
-    $fecha_venta =$_POST['fecha_venta']
-    $id_vendedor =$_POST['id_vendedor']
-    $ultima_venta = $objVenta->buscar_ultima_venta();
+
+
+
+
+
+
+
     
 
 
 
-}
+
 
