@@ -16,19 +16,22 @@ productos_venta[id] = producto;
 productos_venta[id2] = producto2;
 console.log(productos_venta);
 
+// Añadir producto desde la vista de productos: establece los campos ocultos y agrega al temporal
 function agregar_producto_venta(id, precio) {
-    const idInput = document.getElementById('id_producto_venta');
-    const precioInput = document.getElementById('producto_precio_venta');
-    const cantidadInput = document.getElementById('producto_cantidad_venta');
-    if (idInput && precioInput && cantidadInput) {
-        idInput.value = id;
-        precioInput.value = precio;
-        cantidadInput.value = 1;
-        console.log('agregar_producto_venta', { id, precio });
+    try {
+        const inputId = document.getElementById('id_producto_venta');
+        const inputPrecio = document.getElementById('producto_precio_venta');
+        const inputCantidad = document.getElementById('producto_cantidad_venta');
+        if (!inputId || !inputPrecio || !inputCantidad) {
+            console.error('Campos de producto no encontrados en el DOM');
+            return;
+        }
+        inputId.value = id;
+        inputPrecio.value = precio;
+        inputCantidad.value = 1;
         agregar_producto_temporal();
-    } else {
-        console.error('Inputs de venta no encontrados en el DOM.');
-        Swal.fire('Error', 'No se encontraron los inputs del carrito.', 'error');
+    } catch (e) {
+        console.error('Error en agregar_producto_venta:', e);
     }
 }
 
@@ -186,5 +189,27 @@ async function act_subt_general() {
         }
     } catch (error) {
         console.log("error al cargar productos temporales " + error);
+    }
+}
+async function buscar_cliente_venta() {
+    let dni = document.getElementById('cliente_dni').value;
+    try {
+        const datos = new FormData();
+        datos.append('dni', dni);
+        let respuesta = await fetch(base_url + 'control/UsuarioController.php?tipo=buscar_por_dni', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: datos
+        });
+        json = await respuesta.json();
+        if (json.status) {
+            document.getElementById('cliente_nombre').value = json.data.razon_social;
+            document.getElementById('id_cliente_venta').value = json.data.id;
+        }else{
+            alert(json.msg);
+        }
+    } catch (error) {
+        console.log("error al buscar cliente por dni " + error);
     }
 }

@@ -148,3 +148,17 @@ if ($tipo == "cerrar_sesion") {
     $respuesta = array('status' => true, 'msg' => 'Sesión cerrada correctamente');
     echo json_encode($respuesta);
 }
+
+if($tipo=="buacar_por_dni"){
+   $dni = $_POST['dni'];
+   $respuesta = array('status'=>false,'msg'=>'No se encontro el DNI');
+   $usuarios = $objPersona->buscarPersonaPorNroIdentidad($dni);
+   if($usuarios){
+      $respuesta = array('status'=>true,'msg'=>'DNI encontrado','data'=>$usuarios);
+   }else{
+      $respuesta = array('status'=>false,'msg'=>'No se encontro el DNI');
+   }
+   echo json_encode($respuesta);
+}
+
+   

@@ -74,7 +74,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Realizar venta</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">registro de venta</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -82,15 +82,20 @@
           <div class="row">
             <div class="col-md-6">
               <label for="cliente_dni" class="form-label">DNI del cliente</label>
-              <input type="text" class="form-control" id="cliente_dni" name="cliente_dni">
+              <input type="text" class="form-control" id="cliente_dni" name="cliente_dni" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="11">
             </div>
+
             <div class="col-md-6">
               <button type="button" class="btn btn-primary mt-4" onclick="buscar_cliente_venta()">Buscar Cliente</button>
             </div>
             <div class="col-md-12">
               <label for="cliente_nombre" class="form-label">Nombre del cliente</label>
-              <input type="text" class="form-control" id="cliente_nombre" name="cliente_nombre">
+              <input type="text" class="form-control" id="cliente_nombre" name="cliente_nombre" readonly>
+              <input type="hidden" class="form-control" id="cliente_venta">
             </div>
+
+          <div>
+
         </form>
       </div>
       <div class="modal-footer">
