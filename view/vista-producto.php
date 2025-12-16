@@ -91,11 +91,15 @@
             <div class="col-md-12">
               <label for="cliente_nombre" class="form-label">Nombre del cliente</label>
               <input type="text" class="form-control" id="cliente_nombre" name="cliente_nombre" readonly>
-              <input type="hidden" class="form-control" id="cliente_venta">
+              <input type="hidden" class="form-control" id="id_cliente_venta">
+
+
+              
             </div>
             <div class="col-md-6">
               <label for="fecha_venta">fecha de venta</label>
-              <input type="datetime" class="form-control" id="fecha_venta" name="fecha_venta" value="<?= date('Y-m-d H:i') ?>">
+              <input type="datetime-local" class="form-control" id="fecha_venta" name="fecha_venta" value="<?= date('Y-m-d\TH:i') ?>">
+
             </div>
           </div>
 
@@ -105,7 +109,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerra</button>
-        <button type="button" class="btn btn-primary">Registrar</button>
+        <button type="button" class="btn btn-primary" onclick="registrarVenta();">Registrar Venta</button>
       </div>
     </div>
   </div>

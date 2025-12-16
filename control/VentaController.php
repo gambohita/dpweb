@@ -64,28 +64,45 @@ if($tipo=="actualizar_cantidad"){
     echo json_encode($respuesta);
 }
 if($tipo=="registrar_venta"){
+    session_start();
 
-    $correlativo = $_POST['correlativo'];
-    $fecha_venta = $_POST['fecha_venta'];
-    $id_cliente = $_POST['id_cliente'];
-    $id_vendedor = $_POST['id_vendedor'];
+    // Obtener datos del POST con seguridad
+    $id_cliente = isset($_POST['id_cliente']) ? $_POST['id_cliente'] : null;
+    $fecha_venta = isset($_POST['fecha_venta']) ? $_POST['fecha_venta'] : null;
 
-    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
-    $venta = $objVenta->registrar_venta($correlativo, $fecha_venta, $id_cliente, $id_vendedor);
-if($venta){
-    //registrar los detalles de la venta
-    $temporales = $objVenta->buscarTemporales();
-    foreach($temporales as $temporal){
-        //registrar detalle
-        $objVenta->registrar_detalle_venta($venta, $temporal->id_producto, $temporal->precio, $temporal->cantidad);
-    }
-    //eliminar los temporales
-    $objVenta->eliminarTemporales();
-    $respuesta = array('status' => true, 'msg' => 'Venta realizada con exito');
+    // Obtener id del vendedor desde la sesión
+    $id_vendedor = isset($_SESSION['id_usuario']) ? $_SESSION['id_usuario'] : 1; // valor por defecto
+
+    $ultima_venta = $objVenta->buscar_ultima_venta();
+
+    // Determinar correlativo
+    if($ultima_venta){
+        $correlativo = $ultima_venta->codigo + 1;
     } else {
-        $respuesta = array('status' => false, 'msg' => 'Error al registrar la venta');
+        $correlativo = 1;
     }
+
+    // Registrar la venta oficial
+    $venta = $objVenta->registrar_venta($correlativo, $fecha_venta, $id_cliente, $id_vendedor);
+
+    if ($venta) {
+        // Registrar los detalles de la venta
+        $temporales = $objVenta->buscarTemporales();
+        foreach ($temporales as $temporal) {
+            $objVenta->registrar_detalle_venta($venta, $temporal->id_producto, $temporal->precio, $temporal->cantidad);
+        }
+        // Eliminar los temporales
+        $objVenta->eliminarTemporales();
+        $respuesta = array('status' => true, 'msg' => 'venta registrada con exito');
+    } else {
+        $respuesta = array('status' => false, 'msg' => 'error al registrar la venta');
+    }
+
+    // Devolver JSON limpio
+    header('Content-Type: application/json');
     echo json_encode($respuesta);
+    exit;
+}
 
     
-}
+
