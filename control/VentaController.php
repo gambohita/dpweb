@@ -175,4 +175,3 @@ if($tipo == "registrar_venta"){
 
 // Si no coincide ningún tipo
 echo json_encode(['status' => false, 'msg' => 'Tipo de operación no válido']);
-?>
