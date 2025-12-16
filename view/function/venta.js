@@ -53,7 +53,7 @@ async function  agregar_producto_temporal() {
     datos.append('cantidad', cantidad);
 
     try {
-        console.log('Agregar producto temporal', { id, precio, cantidad });
+        console.log('Agregar producto temporal',{ id, precio, cantidad });
         let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=registrar_Temporal', {
             method: 'POST',
             mode: 'cors',
