@@ -35,50 +35,43 @@ function agregar_producto_venta(id,precio) {
     }
 }
 
-async function  agregar_producto_temporal() {
-    let id = (document.getElementById('id_producto_venta') || {}).value;
-    let precio = (document.getElementById('producto_precio_venta') || {}).value;
-    let cantidad = (document.getElementById('producto_cantidad_venta') || {}).value || 1;
-
-    if (!id) {
-        Swal.fire("Aviso", "Seleccione un producto antes de agregar.", "warning");
-        return;
-    }
-
-    cantidad = parseInt(cantidad, 10) || 1;
-
-    const datos = new FormData();
-    datos.append('id_producto', id);
-    datos.append('precio', precio);
-    datos.append('cantidad', cantidad);
-
+async function agregarProductoTemporal(id, precio, cantidad) {
     try {
-        console.log('Agregar producto temporal',{ id, precio, cantidad });
+        console.log('Agregar producto temporal', { id, precio, cantidad });
+        
+        // CREAR FormData con los nombres correctos que espera el PHP
+        const datos = new FormData();
+        datos.append('id_producto', id);  // ← Cambiar de 'id' a 'id_producto'
+        datos.append('precio', precio);
+        datos.append('cantidad', cantidad);
+        
         let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=registrar_Temporal', {
             method: 'POST',
             mode: 'cors',
             cache: 'no-cache',
             body: datos
         });
-
+        
         if (!respuesta.ok) {
             const text = await respuesta.text();
             console.error('Error HTTP al registrar temporal:', respuesta.status, text);
             Swal.fire('Error', 'Error del servidor al agregar el producto.', 'error');
             return;
         }
-
+        
         let json = await respuesta.json();
+        console.log('Respuesta del servidor:', json); // Para debug
+        
         if (json.status) {
             Swal.fire('Listo', json.msg || 'Producto agregado', 'success');
-            listar_temporales();
+            listar_temporales(); // Actualizar la lista
         } else {
             Swal.fire('Error', json.msg || 'No se pudo agregar el producto', 'error');
         }
-
+        
     } catch (error) {
         console.error("Error en cargar producto temporal:", error);
-        Swal.fire('Error', 'Ocurrió un error al agregar el producto.', 'error');
+        Swal.fire('Error', 'Ocurrió un error al agregar el producto: ' + error.message, 'error');
     }
 }
 

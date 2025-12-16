@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 
 require_once("../model/VentaModel.php");
-require_once("../model/productoModel.php");
+require_once("../model/ProductoModel.php");
 
 $objProducto = new ProductoModel();
 $objVenta = new VentaModel();
