@@ -192,6 +192,6 @@ if (document.getElementById('content_clients')) {
 //
 if (document.getElementById('btn_guardar_cambios')) {
     document.getElementById('btn_guardar_cambios').addEventListener('click', function () {
-        actualizarUsuario(); // Llama a la función que hará el update
+        actualizarCliente(); // Llama a la función que hará el update
     });
 }

@@ -1,7 +1,7 @@
 <!-- INICIO DE CUERPO DE PAGINA -->
     <div class="container-fluid">
         <div class="card">
-            <h5 class="card-header"><i class="bi bi-pencil-square"></i> Actualizar Cliente</h5>
+            <h5 class="card-header"><i class="bi bi-pencil-square"></i> Actualizar cliente</h5>
             <form id="frm_edit_cliente" action="" method="">
                 <input type="hidden" id="id_persona" name="id_persona">
                 <div class="card-body">
@@ -72,7 +72,7 @@
                             <div class="mb-3">
                                 <label for="rol" class="form-label"><i class="bi bi-shield-check"></i> Rol:</label>
                                 <select class="form-control" name="rol" id="rol" required>
-                                    <option value="2">Cliente</option>
+                                    <option value="cliente">Cliente</option>
                                 </select>
                             </div>
                         </div>
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let partes = window.location.pathname.split('/');
     let id = partes[partes.length - 1];
     if (!isNaN(id)) {
-        edit_client(id);
+        edit_client(id); // Llama a edit_client para cargar datos del cliente
     }
 });
 </script>
