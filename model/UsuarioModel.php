@@ -122,13 +122,15 @@ class UsuarioModel
     public function verClientes()
     {
         $arr_usuarios = array();
-        $consulta = "SELECT * FROM persona WHERE rol = 'cliente' GROUP BY nro_identidad"; // Solo clientes, sin duplicados
+        $consulta = "SELECT * FROM persona WHERE LOWER(rol) = 'cliente'";
         $sql = $this->conexion->query($consulta);
         while ($objeto = $sql->fetch_object()) {
-            array_push($arr_usuarios, $objeto);
+            $arr_usuarios[] = $objeto;
         }
         return $arr_usuarios;
     }
+    
+
 
     // ver proveedor detallado
     public function verProveedoresDetallados()
