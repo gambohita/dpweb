@@ -280,6 +280,8 @@ async function registrarVenta() {
         datos.append('id_cliente', id_cliente);
         datos.append('fecha_venta', fecha_venta);
 
+        console.debug('RegistrarVenta datos:', { id_cliente, fecha_venta });
+
         let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=registrar_venta', {
             method: 'POST',
             mode: 'cors',
@@ -287,22 +289,38 @@ async function registrarVenta() {
             body: datos
         });
 
-        let text = await respuesta.text();
-        try {
-            let json = JSON.parse(text);
-            if (json.status) {
-                alert("Venta registrada con éxito");
-                window.location.reload();
-            } else {
-                alert(json.msg || "No se pudo registrar la venta");
+        const text = await respuesta.text();
+
+        if (!respuesta.ok) {
+            console.error('HTTP error al registrar venta:', respuesta.status, text);
+            try {
+                const jsonErr = JSON.parse(text);
+                alert(jsonErr.msg || 'Error al registrar la venta: ' + (jsonErr.error || respuesta.status));
+            } catch (e) {
+                alert('Error del servidor: ' + (text || 'Sin respuesta'));
             }
+            return;
+        }
+
+        let json;
+        try {
+            json = JSON.parse(text);
         } catch (e) {
-            console.error("Respuesta del servidor no es JSON:", text);
-            alert("Ocurrió un error en el servidor");
+            console.error('Respuesta no JSON al registrar venta:', text);
+            alert('Respuesta inválida del servidor. Mira la consola para más detalles.');
+            return;
+        }
+
+        if (json.status) {
+            alert("Venta registrada con éxito");
+            window.location.reload();
+        } else {
+            console.error('Error al registrar venta:', json);
+            alert(json.msg || ('No se pudo registrar la venta' + (json.error ? ': ' + json.error : '')));
         }
 
     } catch (error) {
-        console.log("Error al registrar venta:", error);
-        alert("Ocurrió un error al registrar la venta.");
+        console.error("Error al registrar venta:", error);
+        alert("Ocurrió un error al registrar la venta. Mira la consola para más detalles.");
     }
 }
