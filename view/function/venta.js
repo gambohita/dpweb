@@ -290,7 +290,7 @@ async function registrarVenta() {
         datos.append('id_cliente', id_cliente);
         datos.append('fecha_venta', fecha_venta);
     
-        let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=registrar_venta', {
+        let respuesta = await fetch(base_url +'control/VentaController.php?tipo=registrar_venta',{
             method: 'POST',
             body: datos
         });
@@ -307,7 +307,7 @@ async function registrarVenta() {
         }
     
     } catch (error) {
-        console.error("Error al registrar venta:", error);
+        console.error("Error al registrar venta:",error);
         alert("Ocurrió un error inesperado al registrar la venta.");
     }
 }    
