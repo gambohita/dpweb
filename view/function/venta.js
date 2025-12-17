@@ -259,68 +259,39 @@ async function buscar_cliente_venta() {
     }
 }
 
-
 async function registrarVenta() {
-    const id_cliente_elem = document.getElementById('id_cliente_venta');
-    const fecha_elem = document.getElementById('fecha_venta');
-
-    if (!id_cliente_elem || !fecha_elem) {
-        return alert("No se encontraron los campos de cliente o fecha.");
-    }
-
-    const id_cliente = id_cliente_elem.value;
-    const fecha_venta = fecha_elem.value;
+    let id_cliente = document.getElementById('id_cliente_venta').value;
+    let fecha_venta = document.getElementById('fecha_venta').value;
 
     if (id_cliente === '' || fecha_venta === '') {
         return alert("Debe completar todos los campos");
     }
 
     try {
+        fecha_venta = fecha_venta.replace('T', ' ') + ':00';
+    
         const datos = new FormData();
         datos.append('id_cliente', id_cliente);
         datos.append('fecha_venta', fecha_venta);
-
-        console.debug('RegistrarVenta datos:', { id_cliente, fecha_venta });
-
+    
         let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=registrar_venta', {
             method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
             body: datos
         });
-
-        const text = await respuesta.text();
-
-        if (!respuesta.ok) {
-            console.error('HTTP error al registrar venta:', respuesta.status, text);
-            try {
-                const jsonErr = JSON.parse(text);
-                alert(jsonErr.msg || 'Error al registrar la venta: ' + (jsonErr.error || respuesta.status));
-            } catch (e) {
-                alert('Error del servidor: ' + (text || 'Sin respuesta'));
-            }
-            return;
-        }
-
-        let json;
-        try {
-            json = JSON.parse(text);
-        } catch (e) {
-            console.error('Respuesta no JSON al registrar venta:', text);
-            alert('Respuesta inválida del servidor. Mira la consola para más detalles.');
-            return;
-        }
-
+    
+        const texto = await respuesta.text(); // 👈 Cambiamos a texto para ver qué devuelve el PHP
+        console.log("Respuesta del servidor:", texto);
+    
+        const json = JSON.parse(texto); // Si el texto es JSON, lo convierte
         if (json.status) {
             alert("Venta registrada con éxito");
             window.location.reload();
         } else {
-            console.error('Error al registrar venta:', json);
-            alert(json.msg || ('No se pudo registrar la venta' + (json.error ? ': ' + json.error : '')));
+            alert(json.msg);
         }
-
+    
     } catch (error) {
         console.error("Error al registrar venta:", error);
-        alert("Ocurrió un error al registrar la venta. Mira la consola para más detalles.");
+        alert("Ocurrió un error inesperado al registrar la venta.");
     }
-}
+}    

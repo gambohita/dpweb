@@ -1,4 +1,7 @@
 <?php
+header('Content-Type: application/json; charset=utf-8');
+ob_start(); // <- captura cualquier salida accidental
+
 require_once("../model/VentaModel.php");
 require_once("../model/ProductoModel.php");
 
@@ -37,20 +40,19 @@ if($tipo=="lista_venta_temporal"){
     }
     echo json_encode($respuesta);
 }
-
-
 if($tipo=="eliminar_temporal"){
-    $id = $_GET['id'];
+    $id = $_POST['id'];
     $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
-    $consulta = $objVenta->eliminarTemporal($id);
+    $consulta = $objVenta-> eliminarTemporal($id);
     if ($consulta) {
-        $respuesta = array('status' => true, 'msg' => 'Producto eliminado');
-    } else {
-        $respuesta = array('status' => false, 'msg' => 'Error al eliminar el producto');
+        $respuesta = array('status' => true, 'msg' => 'success');
+    }else {
+        $respuesta = array('status' => false, 'msg' => 'error');
     }
     echo json_encode($respuesta);
-
 }
+
+
 if($tipo=="actualizar_cantidad"){
     $id = $_POST['id'];
     $cantidad =  $_POST['cantidad'];
@@ -63,67 +65,54 @@ if($tipo=="actualizar_cantidad"){
     }
     echo json_encode($respuesta);
 }
-if($tipo=="registrar_venta"){
+
+if ($tipo == "registrar_venta") {
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
     session_start();
 
-    header('Content-Type: application/json');
+    // Validar sesión del vendedor
+    if (!isset($_SESSION['ventas_id'])) {
+        echo json_encode(['status' => false, 'msg' => 'Error: sesión no iniciada']);
+        exit;
+    }
 
-    // Obtener datos del POST con seguridad
-    $id_cliente = isset($_POST['id_cliente']) ? $_POST['id_cliente'] : null;
-    $fecha_venta = isset($_POST['fecha_venta']) ? $_POST['fecha_venta'] : null;
+    $id_cliente = $_POST['id_cliente'] ?? '';
+    $fecha_venta = $_POST['fecha_venta'] ?? '';
+    $id_vendedor = $_SESSION['ventas_id'];
 
-    // Obtener id del vendedor desde la sesión
-    $id_vendedor = isset($_SESSION['id_usuario']) ? $_SESSION['id_usuario'] : 1; // valor por defecto
+    if ($id_cliente == '' || $fecha_venta == '') {
+        echo json_encode(['status' => false, 'msg' => 'Campos incompletos']);
+        exit;
+    }
 
-    // Iniciar transacción
-    $objVenta->beginTransaction();
-
+    // Obtener correlativo
     $ultima_venta = $objVenta->buscar_ultima_venta();
+    $correlativo = ($ultima_venta) ? $ultima_venta->codigo + 1 : 1;
 
-    // Determinar correlativo
-    if($ultima_venta){
-        $correlativo = $ultima_venta->codigo + 1;
-    } else {
-        $correlativo = 1;
-    }
+    // Registrar venta
+    $venta_id = $objVenta->registrar_venta($correlativo, $fecha_venta, $id_cliente, $id_vendedor);
 
-    // Registrar la venta oficial
-    $venta = $objVenta->registrar_venta($correlativo, $fecha_venta, $id_cliente, $id_vendedor);
+    if ($venta_id) {
+        // Registrar los detalles
+        $temporales = $objVenta->buscarTemporales();
 
-    if (!$venta) {
-        $objVenta->rollback();
-        $respuesta = array('status' => false, 'msg' => 'error al registrar la venta', 'error' => $objVenta->getLastError());
-        echo json_encode($respuesta);
-        exit;
-    }
-
-    // Registrar los detalles de la venta
-    $temporales = $objVenta->buscarTemporales();
-    if (empty($temporales)) {
-        $objVenta->rollback();
-        $respuesta = array('status' => false, 'msg' => 'No hay productos para registrar');
-        echo json_encode($respuesta);
-        exit;
-    }
-
-    foreach ($temporales as $temporal) {
-        $ok = $objVenta->registrar_detalle_venta($venta, $temporal->id_producto, $temporal->precio, $temporal->cantidad);
-        if (!$ok) {
-            $objVenta->rollback();
-            $respuesta = array('status' => false, 'msg' => 'Error al registrar detalle de venta', 'error' => $objVenta->getLastError());
-            echo json_encode($respuesta);
-            exit;
+        foreach ($temporales as $temporal) {
+            $objVenta->registrar_detalle_venta(
+                $venta_id,
+                $temporal->id_producto,
+                $temporal->precio,
+                $temporal->cantidad
+            );
         }
-    }
 
-    // Eliminar temporales y confirmar
-    $objVenta->eliminarTemporales();
-    $objVenta->commit();
-    $respuesta = array('status' => true, 'msg' => 'venta registrada con exito');
+        // Limpiar temporales
+        $objVenta->eliminarTemporales();
+
+        $respuesta = ['status' => true, 'msg' => 'Venta registrada con éxito'];
+    } else {
+        $respuesta = ['status' => false, 'msg' => 'Error al registrar la venta (INSERT falló)'];
+    }
 
     echo json_encode($respuesta);
-    exit;
 }
-
-    
-
