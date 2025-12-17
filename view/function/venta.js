@@ -168,20 +168,36 @@ async function eliminar_producto_temporal(id) {
     }).then(async (result) => {
         if (result.isConfirmed) {
             try {
-                let respuesta = await fetch(base_url + 'control/VentaController.php?tipo=eliminar_temporal&id=' + id, {
-                    method: 'POST',
+                // ✅ URL correcta: enviamos tipo y el id por GET (separados con &)
+                const url = base_url + 'control/VentaController.php?tipo=eliminar_temporal&id=' + encodeURIComponent(id);
+                console.log("🟢 Eliminando producto:", url);
+
+                const respuesta = await fetch(url, {
+                    method: 'POST', // método puede ser POST, pero los datos van por GET
                     mode: 'cors',
                     cache: 'no-cache'
                 });
-                let json = await respuesta.json();
+
+                // ✅ Validar que la respuesta sea JSON
+                const texto = await respuesta.text();
+                console.log("📦 Respuesta del servidor:", texto);
+
+                let json;
+                try {
+                    json = JSON.parse(texto);
+                } catch (err) {
+                    throw new Error("Respuesta del servidor no es JSON válido: " + texto);
+                }
+
                 if (json.status) {
                     Swal.fire("¡Eliminado!", json.msg, "success");
-                    listar_temporales();
+                    listar_temporales(); // ✅ Actualiza la tabla del carrito
                 } else {
                     Swal.fire("¡Error!", json.msg, "error");
                 }
+
             } catch (e) {
-                console.log("Error al eliminar producto temporal: ", e);
+                console.error("Error al eliminar producto temporal:", e);
                 Swal.fire("¡Error!", "Ocurrió un error al eliminar el producto.", "error");
             }
         }

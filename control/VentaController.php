@@ -40,16 +40,27 @@ if($tipo=="lista_venta_temporal"){
     }
     echo json_encode($respuesta);
 }
-if($tipo=="eliminar_temporal"){
-    $id = $_POST['id'];
-    $respuesta = array('status' => false, 'msg' => 'fallo el controlador');
-    $consulta = $objVenta-> eliminarTemporal($id);
-    if ($consulta) {
-        $respuesta = array('status' => true, 'msg' => 'success');
-    }else {
-        $respuesta = array('status' => false, 'msg' => 'error');
+if ($tipo == "eliminar_temporal") {
+    header('Content-Type: application/json; charset=utf-8');
+
+    // ✅ Lee el ID desde GET (porque llega en la URL)
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+    $respuesta = array('status' => false, 'msg' => 'No se recibió el ID');
+
+    if ($id > 0) {
+        // Llamamos al método del modelo
+        $consulta = $objVenta->eliminarTemporal($id);
+
+        if ($consulta) {
+            $respuesta = array('status' => true, 'msg' => 'Producto eliminado correctamente');
+        } else {
+            $respuesta = array('status' => false, 'msg' => 'No se pudo eliminar el producto');
+        }
     }
+
     echo json_encode($respuesta);
+    exit;
 }
 
 
