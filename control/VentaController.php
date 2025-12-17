@@ -77,9 +77,8 @@ if($tipo=="actualizar_cantidad"){
     echo json_encode($respuesta);
 }
 
-if ($tipo == "registrar_venta") {
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
+if ($tipo == "registrar_venta"){
+
     session_start();
 
     // Validar sesión del vendedor
